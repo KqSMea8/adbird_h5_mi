@@ -18,7 +18,7 @@ class DBUtils {
         return !!this.db[id];
     }
 
-    setGameData(id, name, type, desc, source_detail_url, source_game_url, stars, plays, img_icon, size) {
+    setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size) {
         let index = this.keyMap[id];
         let data = {
             id: id,
@@ -29,6 +29,7 @@ class DBUtils {
             is3d: false,
             source_detail_url: source_detail_url,
             source_game_url: source_game_url,
+            source_play_url: source_play_url,
             stars: stars,
             plays: plays,
             img_icon: img_icon,

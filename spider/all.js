@@ -35,6 +35,7 @@ module.exports = class SpiderAll {
                 $list('div.content li').each((i, elem) => {
                     let source_detail_url = host + $list(elem).find('a').attr('href');
                     let id = source_detail_url.replace(/[a-z\/\?\=\:\.]/gi, '');
+
                     WebUtils.getBodyFromUrl(source_detail_url).then((detail_body) => {
                         const $ = cheerio.load(detail_body);
                         let name = $('span.name').eq(0).text();
@@ -46,8 +47,13 @@ module.exports = class SpiderAll {
                         let img_icon = $('.span-img img').attr('src');
                         let size = $('span.players i').eq(3).text();
 
-                        DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, stars, plays, img_icon, size);
-                        console.log(`${++count} - ${name}`);
+                        WebUtils.getBodyFromUrl(source_game_url).then((game_body)=>{
+                            const $game = cheerio.load(game_body);
+                            let source_play_url = $game('object.game').attr('data')
+
+                            DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size);
+                            console.log(`${++count} - ${name}`);
+                        });
                     });
                 });
                 cb();
