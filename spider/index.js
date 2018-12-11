@@ -2,6 +2,7 @@ const async = require('async');
 const chalk = require('chalk');
 const spiderAll = require('./all');
 const spiderNow = require('./now');
+const spiderHot = require('./hot');
 const DBUtils = require('../utils/db');
 
 class Spider {
@@ -21,6 +22,12 @@ class Spider {
             // 好玩新品
             now: (cb) => {
                 new spiderNow(()=>{
+                    cb();
+                });
+            },
+            // 热游推荐
+            hot: (cb) => {
+                new spiderHot(()=>{
                     cb();
                 });
             }

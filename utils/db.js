@@ -58,6 +58,10 @@ class DBUtils {
         fs.writeFileSync('./sqlite/now.json', JSON.stringify(list));
     }
 
+    setHotList(list){
+        fs.writeFileSync('./sqlite/hot.json', JSON.stringify(list));
+    }
+
 }
 
 module.exports = new DBUtils();
