@@ -1,6 +1,7 @@
 const async = require('async');
 const chalk = require('chalk');
 const spiderAll = require('./all');
+const spiderNow = require('./now');
 const DBUtils = require('../utils/db');
 
 class Spider {
@@ -12,8 +13,16 @@ class Spider {
     run(){
         async.series({
             //全部数据抓取
-            all: (cb) => {
-                new spiderAll();
+            // all: (cb) => {
+            //     new spiderAll(()=>{
+            //         cb();
+            //     });
+            // },
+            //好玩新品
+            now: (cb) => {
+                new spiderNow(()=>{
+                    cb();
+                });
             }
         }, () => {
             console.log( chalk.green('Spider抓取完毕') );

@@ -46,6 +46,10 @@ class DBUtils {
         this.saveLocal();
     }
 
+    setNowList(list){
+        fs.writeFileSync('./sqlite/now.json', JSON.stringify(list));
+    }
+
 }
 
 module.exports = new DBUtils();

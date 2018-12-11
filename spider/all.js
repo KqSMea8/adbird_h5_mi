@@ -18,7 +18,8 @@ const host = 'http://mi.gameasy.top';
 
 module.exports = class SpiderAll {
 
-    constructor() {
+    constructor(done) {
+        this.done = done;
         this.init();
     }
 
@@ -59,7 +60,7 @@ module.exports = class SpiderAll {
                 cb();
             });
         }, () => {
-
+            this.done();
         });
     }
 
