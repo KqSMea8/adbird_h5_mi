@@ -12,13 +12,13 @@ class Spider {
 
     run(){
         async.series({
-            //全部数据抓取
-            // all: (cb) => {
-            //     new spiderAll(()=>{
-            //         cb();
-            //     });
-            // },
-            //好玩新品
+            // 全部数据抓取
+            all: (cb) => {
+                new spiderAll(()=>{
+                    cb();
+                });
+            },
+            // 好玩新品
             now: (cb) => {
                 new spiderNow(()=>{
                     cb();

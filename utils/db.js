@@ -46,6 +46,14 @@ class DBUtils {
         this.saveLocal();
     }
 
+    setTypeList(){
+        let typeList = {};
+        this.db.forEach((val, index) => {
+            typeList[val.type] = true;
+        });
+        fs.writeFileSync('./sqlite/type.json', JSON.stringify(Object.keys(typeList)));
+    }
+
     setNowList(list){
         fs.writeFileSync('./sqlite/now.json', JSON.stringify(list));
     }
