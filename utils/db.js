@@ -4,6 +4,7 @@ class DBUtils {
 
     constructor() {
         this.db = fs.readJsonSync('./sqlite/allgames.json');
+        this.nowList = null;
         this.keyMap = {};
         this.db.forEach((val, index) => {
             this.keyMap[val.id] = index;
@@ -60,6 +61,28 @@ class DBUtils {
 
     setHotList(list){
         fs.writeFileSync('./sqlite/hot.json', JSON.stringify(list));
+    }
+
+    getGameById(id){
+        let index = this.keyMap[id];
+        return this.db[index];
+    }
+
+    getChannelList(){
+        return fs.readJsonSync('./sqlite/channel.json')
+    }
+
+    getNowList(){
+        if( this.nowList ){
+            return this.nowList;
+        }
+        let idlist = fs.readJsonSync('./sqlite/now.json');
+        let ret = [];
+        idlist.forEach((id)=>{
+            ret.push( this.getGameById(id) );
+        });
+        this.nowList = ret;
+        return this.nowList;
     }
 
 }
