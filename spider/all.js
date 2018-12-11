@@ -3,6 +3,8 @@ const WebUtils = require('../utils/web');
 const DBUtils = require('../utils/db');
 const MathUtils = require('../utils/number');
 const cheerio = require('cherio');
+const fs = require('fs-extra');
+const path = require('path');
 
 const typeMap = {
     '1': 'Arcade',
@@ -73,9 +75,14 @@ module.exports = class SpiderAll {
                     const $game = cheerio.load(game_body);
                     let source_play_url = $game('object.game').attr('data')
 
-                    DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size);
-                    console.log(`${++count} - ${name}`);
-                    cb();
+                    //下载icon
+                    let iconfile = path.resolve(__dirname, `../static/res/${id}/icon.png`);
+                    fs.ensureFileSync(iconfile);
+                    WebUtils.download(img_icon, iconfile).then(()=>{
+                        DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size);
+                        console.log(`${++count} - ${name}`);
+                        cb();
+                    });
                 });
             });
         }, ()=>{
