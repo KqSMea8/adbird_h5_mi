@@ -44,7 +44,7 @@ module.exports = class SpiderAll {
                         let stars = MathUtils.float( $('i.rate').eq(0).text() );
                         let plays = MathUtils.int( $('i.count').text().replace('已经玩了 ', '').replace('K+ 次', '').replace('K+ Players', '') );
                         let img_icon = $('.span-img img').attr('src');
-                        let size = $('span.players i').eq(4).text();
+                        let size = $('span.players i').eq(3).text();
 
                         DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, stars, plays, img_icon, size);
                         console.log(`${++count} - ${name}`);
