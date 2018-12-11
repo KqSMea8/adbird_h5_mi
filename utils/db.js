@@ -1,10 +1,12 @@
 const fs = require('fs-extra');
+const chalk = require('chalk');
 
 class DBUtils {
 
     constructor() {
         this.db = fs.readJsonSync('./sqlite/allgames.json');
         this.nowList = null;
+        this.hotList = null;
         this.keyMap = {};
         this.db.forEach((val, index) => {
             this.keyMap[val.id] = index;
@@ -65,6 +67,10 @@ class DBUtils {
 
     getGameById(id){
         let index = this.keyMap[id];
+        let ret = this.db[index];
+        if( !ret ){
+            console.log( chalk(`没有找到游戏数据id=${id}`) );
+        }
         return this.db[index];
     }
 
@@ -83,6 +89,29 @@ class DBUtils {
         });
         this.nowList = ret;
         return this.nowList;
+    }
+
+    getHotList(){
+        if( this.hotList ){
+            return this.hotList;
+        }
+        let idlist = fs.readJsonSync('./sqlite/hot.json');
+        let ret = [];
+        idlist.forEach((id)=>{
+            ret.push( this.getGameById(id) );
+        });
+        this.hotList = ret;
+        return this.hotList;
+    }
+
+    getTypeList(type){
+        let ret = [];
+        this.db.forEach((game)=>{
+            if( game.type == type ){
+                ret.push( game );
+            }
+        });
+        return ret;
     }
 
 }

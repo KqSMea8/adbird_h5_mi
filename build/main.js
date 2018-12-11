@@ -34,6 +34,7 @@ class Builder {
         }, () => {
             this.copy('index.css');
             this.copy('swipe.js');
+            this.copy('res');
             console.log( chalk.green('Builder构建完毕') );
         });
     }

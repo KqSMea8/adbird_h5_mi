@@ -33,9 +33,29 @@
         </div>
         <div class='slider'>
             <% for(var i=0; i<10; i++){ %>
-                <a style="background:<%= nowColor(i) %>;"><%= nowList[i].name %></a>
+                <a style="background:<%= nowColor(i) %>;">
+                    <img src="/static/res/<%= nowList[i].id %>/icon.png">
+                    <p class="name"><%= nowList[i].name %></p>
+                    <p class="plays">
+                        <span class="count"><%= nowList[i].plays %>K+</span>
+                        <span class="label">plays</span>
+                    </p>
+                </a>
             <% } %>
         </div>
+        <% for(var i=0; i<bigList.length; i++){ %>
+            <div class="title">
+                <span><%= bigList[i].title %></span>
+                <a href="<%= bigList[i].href %>">All</a>
+            </div>
+            <div>
+                <% for(var m=0; m<8; m++){ %>
+                    <div>
+                        <%= bigList[i].list[m].name %>
+                    </div>
+                <% } %>
+            </div>
+        <% } %>
     </div>
 </body>
 

@@ -22,7 +22,8 @@ class Builder {
         tpl = ejs.render(tpl, {
             channel: channel,
             nowList: DBUtils.getNowList(),
-            nowColor: this.nowColor
+            nowColor: this.nowColor,
+            bigList: this.bigList()
         });
         fs.ensureFileSync(releaseFile);
         fs.writeFileSync(releaseFile, tpl);
@@ -39,6 +40,22 @@ class Builder {
         else{
             return 'rgba(67,151,23,.9)';
         }
+    }
+
+    bigList(){
+        let ret = [];
+        let type1 = 'Beauty & Girl';
+        ret.push({
+            title: 'Hot',
+            href: '/hot.html',
+            list: DBUtils.getHotList()
+        });
+        ret.push({
+            title: type1,
+            href: `/category.html?type=${encodeURIComponent(type1)}`,
+            list: DBUtils.getTypeList(type1)
+        });
+        return ret;
     }
 
 }

@@ -27,7 +27,16 @@ module.exports = class SpiderAll {
         // done();
         // return;
 
-        this.gameList = [];
+        this.gameList = [
+            {
+                id: 1,
+                source_detail_url: 'http://mi.gameasy.top/detail?id=1'
+            },
+            {
+                id: 2,
+                source_detail_url: 'http://mi.gameasy.top/detail?id=2'
+            }
+        ];
         this.init();
     }
 
@@ -80,6 +89,13 @@ module.exports = class SpiderAll {
                     fs.ensureFileSync(iconfile);
                     WebUtils.download(img_icon, iconfile).then(()=>{
                         DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size);
+
+                        //整理到jsonp资源
+                        let jsonpfile = path.resolve(__dirname, `../static/res/${id}/data.js`);
+                        let gamedata = DBUtils.getGameById(id);
+                        fs.ensureFileSync(jsonpfile);
+                        fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gamedata)});`);
+
                         console.log(`${++count} - ${name}`);
                         cb();
                     });
