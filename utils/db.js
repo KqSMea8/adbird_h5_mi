@@ -11,7 +11,7 @@ class DBUtils {
     }
 
     saveLocal() {
-        fs.writeFileSync('./sqlite/games.json', JSON.stringify(this.db, null, 4));
+        fs.writeFileSync('./sqlite/allgames.json', JSON.stringify(this.db, null, 4));
     }
 
     isGameExists(id) {

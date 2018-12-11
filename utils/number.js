@@ -8,4 +8,12 @@ module.exports = class MathUtils {
         return ret;
     }
 
+    static int(val) {
+        let ret = parseInt(val, 10);
+        if (isNaN(ret)) {
+            ret = 0.0
+        }
+        return ret;
+    }
+
 }

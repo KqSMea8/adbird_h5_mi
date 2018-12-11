@@ -41,8 +41,8 @@ module.exports = class SpiderAll {
                         let type = $('span.tag').eq(0).text();
                         let desc = $('div.desc').eq(0).text();
                         let source_game_url = `${host}/play?id=${id}`;
-                        let stars = MathUtils.float( $('r.rate').eq(0).text() );
-                        let plays = ~~(Math.random()*100000);
+                        let stars = MathUtils.float( $('i.rate').eq(0).text() );
+                        let plays = MathUtils.int( $('i.count').text().replace('已经玩了 ', '').replace('K+ 次', '').replace('K+ Players', '') );
                         let img_icon = $('.span-img img').attr('src');
                         let size = $('span.players i').eq(4).text();
 
