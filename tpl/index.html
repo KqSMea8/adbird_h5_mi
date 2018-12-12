@@ -51,14 +51,14 @@
             </div>
             <% for(var m=0; m<8; m++){ %>
                 <% if( m%4==0 ){ %><div><% } %>
-                <div class="box">
+                <a class="box" href="/<%= channel.code %>/detail.html?id=<%= bigList[i].list[m].id %>">
                     <div class="icon" style="background-image: url('/static/res/<%= bigList[i].list[m].id %>/icon.png')"></div>
                     <p class="name"><%= bigList[i].list[m].name %></p>
                     <p class="plays">
                         <span class="count"><%= bigList[i].list[m].plays %>K+</span>
                         <span class="label">plays</span>
                     </p>
-                </div>
+                </a>
                 <% if( m%4==3 ){ %><div class="clear"></div></div><% } %>
             <% } %>
         <% } %>
@@ -67,7 +67,3 @@
 </body>
 
 </html>
-<!-- <script src="/static/swipe.js"></script>
-<script>
-Swipe(document.getElementById('slider'));
-</script> -->

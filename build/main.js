@@ -3,7 +3,7 @@ const chalk = require('chalk');
 const fs = require('fs-extra');
 const path = require('path');
 const buildIndex = require('./index');
-
+const buildDetail = require('./detail');
 
 class Builder {
 
@@ -19,21 +19,17 @@ class Builder {
                     cb();
                 });
             },
-            // // 好玩新品
-            // now: (cb) => {
-            //     new spiderNow(()=>{
-            //         cb();
-            //     });
-            // },
-            // // 热游推荐
-            // hot: (cb) => {
-            //     new spiderHot(()=>{
-            //         cb();
-            //     });
-            // }
+            // 详情页
+            detail: (cb) => {
+                new buildDetail(()=>{
+                    cb();
+                });
+            }
         }, () => {
             this.copy('index.css');
-            this.copy('swipe.js');
+            this.copy('detail.css');
+            this.copy('vue.js');
+            this.copy('detail.js');
             this.copy('res');
             this.copy('icon');
             console.log( chalk.green('Builder构建完毕') );
