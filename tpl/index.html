@@ -33,7 +33,7 @@
         </div>
         <div class='slider'>
             <% for(var i=0; i<10; i++){ %>
-                <a style="background:<%= nowColor(i) %>;">
+                <a href="./detail.html?id=<%= nowList[i].id %>" style="background:<%= nowColor(i) %>;">
                     <img src="/static/res/<%= nowList[i].id %>/icon.png">
                     <p class="name"><%= nowList[i].name %></p>
                     <p class="plays">

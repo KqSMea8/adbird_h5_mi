@@ -36,7 +36,7 @@ class Builder {
             this.copyCss(['index', 'detail', 'play'], false);
             this.copyJs(['vue', 'detail', 'play', 'gamead'], false);
             // this.copy('res');
-            // this.copy('icon');
+            this.copy('icon');
             console.log( chalk.green('Builder构建完毕') );
         });
     }

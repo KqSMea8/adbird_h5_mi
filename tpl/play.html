@@ -33,9 +33,16 @@
     <script>
     (adsbygoogle = window.adsbygoogle || []).push({});
     </script>
-    <div class="menu"></div>
-    <div class="setting">
-        
+    <div class="menu" id="menu"></div>
+    <div class="setting" id="setting" style="display: none;">
+        <a href="javascript:window.history.go(-1)" class="item">
+            <div class="icon iconback"></div>
+            <p>Back</p>
+        </a>
+        <a href="/<%= channel.code %>/index.html" class="item">
+            <div class="icon iconhome"></div>
+            <p>Home</p>
+        </a>
     </div>
     <div id="mainContainer">
         <div id="content">
@@ -48,5 +55,5 @@
 </html>
 <script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
 <script src="/static/gamead.js"></script>
-<script src="/static/play.js"></script>
 <script>init('<%= channel.ca_games_pub %>')</script>
+<script src="/static/play.js"></script>

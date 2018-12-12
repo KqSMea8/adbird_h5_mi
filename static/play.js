@@ -22,7 +22,17 @@
         document.getElementById('game').setAttribute('data', url);
     }
 
+    //菜单
+    function initMenu(){
+        var menu = document.getElementById('menu');
+        var setting = document.getElementById('setting');
+        menu.addEventListener('click', function(){
+            setting.style.display = setting.style.display=='block' ? 'none' : 'block';
+        });
+    }
+
     getParams();
     startGame();
+    initMenu();
 
 })();
