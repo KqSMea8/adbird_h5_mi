@@ -116,7 +116,7 @@ module.exports = class SpiderAll {
                         delete gameinfo.img_icon;
                         delete gameinfo.source_detail_url;
                         delete gameinfo.source_game_url;
-                        gameinfo.source_play_url = gameinfo.source_play_url.split('?')[0].replace('https://play.okeyplay.com', '');
+                        gameinfo.source_play_url = WebUtils.minPlayUrl(gameinfo.source_play_url);
                         fs.ensureFileSync(jsonpfile);
                         fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gameinfo)});`);
 

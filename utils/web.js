@@ -25,6 +25,10 @@ class WebUtils {
         });
     };
 
+    static minPlayUrl(url){
+        return encodeURIComponent( url.split('?')[0].replace('https://play.okeyplay.com', '') );
+    }
+
 }
 
 module.exports = WebUtils;

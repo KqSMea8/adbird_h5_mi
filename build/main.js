@@ -5,6 +5,7 @@ const path = require('path');
 const buildIndex = require('./index');
 const buildDetail = require('./detail');
 const buildPlay = require('./play');
+const buildNow = require('./now');
 
 class Builder {
 
@@ -31,10 +32,16 @@ class Builder {
                 new buildPlay(()=>{
                     cb();
                 });
+            },
+            // NOW
+            now: (cb) => {
+                new buildNow(()=>{
+                    cb();
+                });
             }
         }, () => {
-            this.copyCss(['index', 'detail', 'play'], false);
-            this.copyJs(['vue', 'detail', 'play', 'gamead'], false);
+            this.copyCss(['index', 'detail', 'play', 'now'], false);
+            this.copyJs(['vue', 'detail', 'play', 'gamead', 'lazyload'], false);
             // this.copy('res');
             this.copy('icon');
             console.log( chalk.green('Builder构建完毕') );
@@ -43,7 +50,7 @@ class Builder {
 
     copyCss(list, min){
         list.forEach((name)=>{
-            this.copy(`${name}.css`);
+            this.copy(`less/${name}.css`, `${name}.css`);
         });
     }
 
@@ -53,8 +60,9 @@ class Builder {
         });
     }
 
-    copy(name){
-        fs.copySync( path.resolve(__dirname, `../static/${name}`), path.resolve(__dirname, `../release/static/${name}` ) );
+    copy(fromPath, toPath){
+        toPath = toPath || fromPath;
+        fs.copySync( path.resolve(__dirname, `../static/${fromPath}`), path.resolve(__dirname, `../release/static/${toPath}` ) );
     }
 
 }

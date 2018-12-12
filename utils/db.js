@@ -1,5 +1,6 @@
 const fs = require('fs-extra');
 const chalk = require('chalk');
+const MathUtils = require('./web');
 
 class DBUtils {
 
@@ -78,7 +79,8 @@ class DBUtils {
         if( !ret ){
             console.log( chalk(`没有找到游戏数据id=${id}`) );
         }
-        return this.db[index];
+        ret.source_play_url = MathUtils.minPlayUrl(ret.source_play_url);
+        return ret;
     }
 
     getChannelList(){
