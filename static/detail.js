@@ -50,6 +50,9 @@
             getDetailUrl: function (id) {
                 return './detail.html?id=' + id;
             },
+            getPlayUrl: function(){
+                return './play.html?id='+this.id+'&url='+encodeURIComponent(this.game.source_play_url);
+            },
             getImgIcon: function (id) {
                 return 'url("/static/res/' + id + '/icon.png")';
             },
