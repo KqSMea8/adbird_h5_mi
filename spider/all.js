@@ -2,6 +2,7 @@ const async = require('async');
 const WebUtils = require('../utils/web');
 const DBUtils = require('../utils/db');
 const MathUtils = require('../utils/number');
+const ObjectUtils = require('../utils/object');
 const cheerio = require('cherio');
 const fs = require('fs-extra');
 const path = require('path');
@@ -111,8 +112,13 @@ module.exports = class SpiderAll {
                         //整理到jsonp资源
                         let jsonpfile = path.resolve(__dirname, `../static/res/${id}/data.js`);
                         let gamedata = DBUtils.getGameById(id);
+                        let gameinfo = ObjectUtils.clone(gamedata);
+                        delete gameinfo.img_icon;
+                        delete gameinfo.source_detail_url;
+                        delete gameinfo.source_game_url;
+                        gameinfo.source_play_url = gameinfo.source_play_url.split('?')[0].replace('https://play.okeyplay.com', '');
                         fs.ensureFileSync(jsonpfile);
-                        fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gamedata)});`);
+                        fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gameinfo)});`);
 
                         console.log(`${++count} - ${name}`);
                         cb();
