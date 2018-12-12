@@ -52,7 +52,11 @@
                 <% for(var m=0; m<8; m++){ %>
                     <div class="box">
                         <div class="icon" style="background-image: url('/static/res/<%= bigList[i].list[m].id %>/icon.png')"></div>
-                        <%= bigList[i].list[m].name %>
+                        <p class="name"><%= bigList[i].list[m].name %></p>
+                        <p class="plays">
+                            <span class="count"><%= bigList[i].list[m].plays %>K+</span>
+                            <span class="label">plays</span>
+                        </p>
                     </div>
                 <% } %>
             </div>

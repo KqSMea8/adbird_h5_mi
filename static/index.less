@@ -94,12 +94,34 @@ html,body{
     .box{
         width: 25%;
         float: left;
+        text-align: center;
         .icon{
             width: 90%;
             padding-bottom: 90%;
             background-size: cover;
             margin: 0 auto;
             border-radius: 10px;
+        }
+        .name{
+            font-size: 14px;
+            margin: 5px 0 0;
+            line-height: 18px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            max-height: 36px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            -webkit-box-orient: vertical!important;
+        }
+        .plays{
+            font-size: 12px;
+            margin: 0 0 15px;
+            .count{
+                color: #F99D00;
+            }
+            .label{
+                color: #9d9d9d;
+            }
         }
     }
 }
