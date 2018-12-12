@@ -45,7 +45,7 @@ class Builder {
     bigList(){
         let ret = [];
         ret.push({
-            title: 'Hot',
+            title: 'Hot Games',
             href: '/hot.html',
             list: DBUtils.getHotList()
         });
@@ -54,7 +54,8 @@ class Builder {
             ret.push({
                 title: type,
                 href: `/category.html?type=${encodeURIComponent(type)}`,
-                list: DBUtils.getTypeListFromFirst(type)
+                list: DBUtils.getTypeListFromFirst(type),
+                icon: true
             });
         });
         return ret;
