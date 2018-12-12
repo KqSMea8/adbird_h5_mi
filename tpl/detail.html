@@ -28,14 +28,14 @@
     <div id="app" style="display: none;">
         <div class="header">
             <a class="back" href="javascript:window.history.go(-1);"></a>
-            {{game.name}}
+            {{getShortName(game.name)}}
             <a class="home" v-bind:href="getHomeUrl()"></a>
         </div>
         <div class="content">
             <div class="detail">
                 <div class="icon" v-bind:style="{ backgroundImage: imgIcon}"></div>
                 <div class="info">
-                    <p class="name">{{game.name}}</p>
+                    <p class="name">{{getShortName(game.name)}}</p>
                     <p class="type">{{game.type}}</p>
                     <p class="stars">
                         <span class="starbox">☆☆☆☆☆</span>
@@ -56,13 +56,29 @@
                 <div v-for="item in game.like" class="likebox">
                     <a v-bind:href="getDetailUrl(item.id)">
                         <span class="icon" v-bind:style="{ backgroundImage: getImgIcon(item.id)}"></span>
-                        <span class="name">{{item.name}}</span>
+                        <span class="name">{{getShortName(item.name)}}</span>
                         <span class="play">PLAY</span>
                     </a>    
                 </div>
             </div>
         </div>
         <div class="line"></div>
+        <div class="content">
+            <div class="title">Description</div>
+            <div class="wrap">
+                <span class="desc">{{game.desc}}</span>
+            </div>
+            <div class="title">Detail</div>
+            <div class="wrap">
+                <span class="info">Size: {{game.size}}</span>
+                <span class="info">Version: {{game.version}}</span>
+                <span class="info">UpdateTime: {{game.updatetime}}</span>
+            </div>
+        </div>
+        <div class="bottom"></div>
+        <div class="startplay">
+            <span>PLAY</span>
+        </div>
     </div>
 </body>
 

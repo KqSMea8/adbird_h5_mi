@@ -52,6 +52,12 @@
             },
             getImgIcon: function (id) {
                 return 'url("/static/res/' + id + '/icon.png")';
+            },
+            getShortName: function(name){
+                if( name.length > 15 ){
+                    return name.slice(0, 15) + '..';
+                }
+                return name;
             }
         }
     })
