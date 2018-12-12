@@ -79,6 +79,11 @@ module.exports = class SpiderAll {
                 let plays = MathUtils.int( $('i.count').text().replace('已经玩了 ', '').replace('K+ 次', '').replace('K+ Players', '').replace(',', '') );
                 let img_icon = $('.span-img img').attr('src');
                 let size = $('span.players i').eq(3).text();
+                let like = [];
+                $('.like li').each((i_, elem_)=>{
+                    let id_ = $(elem_).find('a').attr('href').replace(/[a-z\/\?\=\:\.]/gi, '');
+                    like.push( MathUtils.int(id_) );
+                });
 
                 WebUtils.getBodyFromUrl(source_game_url).then((game_body)=>{
                     const $game = cheerio.load(game_body);
@@ -88,7 +93,7 @@ module.exports = class SpiderAll {
                     let iconfile = path.resolve(__dirname, `../static/res/${id}/icon.png`);
                     fs.ensureFileSync(iconfile);
                     WebUtils.download(img_icon, iconfile).then(()=>{
-                        DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size);
+                        DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size, like);
 
                         //整理到jsonp资源
                         let jsonpfile = path.resolve(__dirname, `../static/res/${id}/data.js`);

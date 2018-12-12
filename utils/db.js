@@ -21,7 +21,7 @@ class DBUtils {
         return !!this.db[id];
     }
 
-    setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size) {
+    setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size, like) {
         let index = this.keyMap[id];
         let data = {
             id: id,
@@ -37,7 +37,8 @@ class DBUtils {
             plays: plays,
             img_icon: img_icon,
             img_banner: '',
-            size: size
+            size: size,
+            like: like
         };
         if (index >= 0) {
             this.db[index] = data;
