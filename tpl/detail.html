@@ -27,7 +27,9 @@
 <body>
     <div id="app" style="display: none;">
         <div class="header">
-            <a class="back" href="javascript:window.history.go(-1);"></a>{{game.name}}
+            <a class="back" href="javascript:window.history.go(-1);"></a>
+            {{game.name}}
+            <a class="home" v-bind:href="getHomeUrl()"></a>
         </div>
         <div class="content">
             <div class="detail">
@@ -49,7 +51,18 @@
                 </div>
                 <div class="clear"></div>
             </div>
+            <div class="title">You May Like</div>
+            <div class="wrap">
+                <div v-for="item in game.like" class="likebox">
+                    <a v-bind:href="getDetailUrl(item.id)">
+                        <span class="icon" v-bind:style="{ backgroundImage: getImgIcon(item.id)}"></span>
+                        <span class="name">{{item.name}}</span>
+                        <span class="play">PLAY</span>
+                    </a>    
+                </div>
+            </div>
         </div>
+        <div class="line"></div>
     </div>
 </body>
 

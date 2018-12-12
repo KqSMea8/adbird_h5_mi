@@ -1,6 +1,9 @@
 (function () {
 
-    var params = {};
+    var params = {
+        channel: location.pathname.split('/')[1]
+    };
+    var likeid = [];
 
     //获取id
     function getParams() {
@@ -25,24 +28,47 @@
         el: '#app',
         data: {
             id: params.id,
+            channel: params.channel,
             game: {
                 name: 'GameBox',
-                stars: 10
+                stars: 10,
+                like: []
             }
         },
         computed: {
-            imgIcon: function(){
-                return 'url("/static/res/'+this.id+'/icon.png")';
+            imgIcon: function () {
+                return 'url("/static/res/' + this.id + '/icon.png")';
             },
-            starsStr: function(){
+            starsStr: function () {
                 return this.game.stars.toFixed(1);
+            }
+        },
+        methods: {
+            getHomeUrl: function () {
+                return '/' + this.channel + '/index.html';
+            },
+            getDetailUrl: function (id) {
+                return './detail.html?id=' + id;
+            },
+            getImgIcon: function (id) {
+                return 'url("/static/res/' + id + '/icon.png")';
             }
         }
     })
 
-    window.jsonpGetData = function(gamedata){
-        app.game = gamedata;
-        app.$el.style.display = 'block';
+    window.jsonpGetData = function (gamedata) {
+        if (gamedata.id == params.id) {
+            likeid = gamedata.like.slice(0);
+            gamedata.like = [];
+            app.game = gamedata;
+            app.$el.style.display = 'block';
+        }
+        else {
+            app.game.like.push(gamedata);
+        }
+        if (likeid.length) {
+            appendScript(likeid.shift());
+        }
     }
 
     appendScript(params.id);
