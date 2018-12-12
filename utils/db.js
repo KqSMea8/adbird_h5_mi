@@ -113,11 +113,16 @@ class DBUtils {
         return this.hotList;
     }
 
+    getTypes(type){
+        return fs.readJsonSync('./sqlite/type.json')
+    }
+
     getTypeList(type){
         let ret = [];
-        this.db.forEach((game)=>{
+        let gamelist = fs.readJsonSync('./sqlite/allgames.json');
+        gamelist.forEach((game)=>{
             if( game.type == type ){
-                ret.push( game );
+                ret.push( this.getGameById(game.id) );
             }
         });
         return ret;

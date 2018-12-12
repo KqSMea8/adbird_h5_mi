@@ -32,11 +32,19 @@
     </div>
     <div class="content">
         <div class="nav">
-            <a href="/<%= channel.code %>/now.html" <% if(navName=='New'){ %>style="color:#f99d00;"<% } %></a>New</a>
+            <a href="/<%= channel.code %>/now.html" <% if(navName=='New'){ %>style="color:#f99d00;"<% } %>>New</a>
             <a href="/<%= channel.code %>/hot.html" <% if(navName=='Hot'){ %>style="color:#f99d00;"<% } %>>Hot</a>
-            <a href="/<%= channel.code %>/category.html">Category</a>
+            <a href="/<%= channel.code %>/category_Arcade.html" <% if(navName=='Category'){ %>style="color:#f99d00;"<% } %>>Category</a>
             <a class="clear"></a>
         </div>
+        <% if(navName=='Category'){ %>
+        <div class="category">
+            <% for(var i=0; i<typeList.length; i++){ %>
+                <a href="/<%= channel.code %>/category_<%= typeList[i] %>.html" <% if(typeName==typeList[i]){ %>style="color:#f99d00;"<% } %>><%= typeList[i] %></a>
+            <% } %>
+            <a class="clear"></a>
+        </div>
+        <% } %>
         <div class="listwrap">
             <% for(var i=0; i<list.length; i++){ %>
             <div class="item">

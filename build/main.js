@@ -7,6 +7,7 @@ const buildDetail = require('./detail');
 const buildPlay = require('./play');
 const buildNow = require('./now');
 const buildHot = require('./hot');
+const buildCategory = require('./category');
 
 class Builder {
 
@@ -19,30 +20,42 @@ class Builder {
             // 首页
             index: (cb) => {
                 new buildIndex(()=>{
+                    console.log( chalk.green(`index`) );
                     cb();
                 });
             },
             // 详情页
             detail: (cb) => {
                 new buildDetail(()=>{
+                    console.log( chalk.green(`detail`) );
                     cb();
                 });
             },
             // 游戏页
             play: (cb) => {
                 new buildPlay(()=>{
+                    console.log( chalk.green(`play`) );
                     cb();
                 });
             },
             // Now
             now: (cb) => {
                 new buildNow(()=>{
+                    console.log( chalk.green(`now`) );
                     cb();
                 });
             },
             // Hot
             hot: (cb) => {
                 new buildHot(()=>{
+                    console.log( chalk.green(`hot`) );
+                    cb();
+                });
+            },
+            // Category
+            category: (cb) => {
+                new buildCategory(()=>{
+                    console.log( chalk.green(`category`) );
                     cb();
                 });
             }
