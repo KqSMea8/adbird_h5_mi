@@ -33,7 +33,7 @@
     <div class="content">
         <div class="nav">
             <a href="/<%= channel.code %>/now.html" <% if(navName=='New'){ %>style="color:#f99d00;"<% } %></a>New</a>
-            <a href="/<%= channel.code %>/hot.html">Hot</a>
+            <a href="/<%= channel.code %>/hot.html" <% if(navName=='Hot'){ %>style="color:#f99d00;"<% } %>>Hot</a>
             <a href="/<%= channel.code %>/category.html">Category</a>
             <a class="clear"></a>
         </div>

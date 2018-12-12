@@ -6,6 +6,7 @@ const buildIndex = require('./index');
 const buildDetail = require('./detail');
 const buildPlay = require('./play');
 const buildNow = require('./now');
+const buildHot = require('./hot');
 
 class Builder {
 
@@ -33,9 +34,15 @@ class Builder {
                     cb();
                 });
             },
-            // NOW
+            // Now
             now: (cb) => {
                 new buildNow(()=>{
+                    cb();
+                });
+            },
+            // Hot
+            hot: (cb) => {
+                new buildHot(()=>{
                     cb();
                 });
             }
