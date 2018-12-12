@@ -46,14 +46,14 @@ class Builder {
         let ret = [];
         ret.push({
             title: 'Hot Games',
-            href: '/hot.html',
+            href: 'hot.html',
             list: DBUtils.getHotList()
         });
         let typeList = ['Beauty & Girl', 'Arcade', 'Sports & Racing', 'Strategy', 'Puzzle & Logic', 'Adventure', 'Action & Risk', 'Music'];
         typeList.forEach((type)=>{
             ret.push({
                 title: type,
-                href: `/category.html?type=${encodeURIComponent(type)}`,
+                href: `category_${type}.html`,
                 list: DBUtils.getTypeListFromFirst(type),
                 icon: true
             });
