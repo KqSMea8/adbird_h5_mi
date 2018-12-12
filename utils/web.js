@@ -1,5 +1,6 @@
 const request = require('request');
 const fs = require('fs-extra');
+const minify = require('html-minifier').minify;
 const config = { proxy: 'http://web-proxy.oa.com:8080' };
 // const config = {};
 
@@ -18,15 +19,25 @@ class WebUtils {
             request.head(uri, function (err, res, body) {
                 // console.log('content-type:', res.headers['content-type']);
                 // console.log('content-length:', res.headers['content-length']);
-                request(uri, config).pipe(fs.createWriteStream(filename)).on('close', ()=>{
+                request(uri, config).pipe(fs.createWriteStream(filename)).on('close', () => {
                     resolve();
                 });
             });
         });
     };
 
-    static minPlayUrl(url){
-        return encodeURIComponent( url.split('?')[0].replace('https://play.okeyplay.com', '') );
+    static minPlayUrl(url) {
+        return encodeURIComponent(url.split('?')[0].replace('https://play.okeyplay.com', ''));
+    }
+
+    static minHtml(html) {
+        return minify(html, {
+            collapseWhitespace: true,
+            removeComments: true,
+            minifyCSS: true,
+            minifyJS: true,
+            decodeEntities: true
+        });
     }
 
 }

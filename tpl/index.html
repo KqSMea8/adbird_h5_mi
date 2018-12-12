@@ -55,7 +55,7 @@
         <% for(var i=0; i<bigList.length; i++){ %>
             <div class="title">
                 <% if( bigList[i].icon ){ %>
-                <div class="icon" style="background-image: url('/static/icon/<%= bigList[i].title %>.webp')"></div>
+                <div class="icon lazyload" data-src="/static/icon/<%= bigList[i].title %>.png"></div>
                 <% } %>
                 <span><%= bigList[i].title %></span>
                 <a href="<%= bigList[i].href %>" <% if( bigList[i].icon ){ %>style="margin-top: 13px;"<% } %> >See All</a>
@@ -63,7 +63,7 @@
             <% for(var m=0; m<8; m++){ %>
                 <% if( m%4==0 ){ %><div><% } %>
                 <a class="box" href="/<%= channel.code %>/detail.html?id=<%= bigList[i].list[m].id %>">
-                    <div class="icon" style="background-image: url('/static/res/<%= bigList[i].list[m].id %>/icon.png')"></div>
+                    <div class="icon lazyload" data-src="/static/res/<%= bigList[i].list[m].id %>/icon.png"></div>
                     <p class="name"><%= bigList[i].list[m].name %></p>
                     <p class="plays">
                         <span class="count"><%= bigList[i].list[m].plays %>K+</span>
@@ -78,3 +78,4 @@
 </body>
 
 </html>
+<script src="/static/lazyload.js"></script>
