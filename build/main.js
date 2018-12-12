@@ -33,15 +33,23 @@ class Builder {
                 });
             }
         }, () => {
-            this.copy('index.css');
-            this.copy('detail.css');
-            this.copy('play.css');
-            this.copy('vue.js');
-            this.copy('detail.js');
-            this.copy('play.js');
-            this.copy('res');
-            this.copy('icon');
+            this.copyCss(['index', 'detail', 'play'], false);
+            this.copyJs(['vue', 'detail', 'play', 'gamead'], false);
+            // this.copy('res');
+            // this.copy('icon');
             console.log( chalk.green('Builder构建完毕') );
+        });
+    }
+
+    copyCss(list, min){
+        list.forEach((name)=>{
+            this.copy(`${name}.css`);
+        });
+    }
+
+    copyJs(list, min){
+        list.forEach((name)=>{
+            this.copy(`${name}.js`);
         });
     }
 
