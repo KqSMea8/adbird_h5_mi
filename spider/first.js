@@ -17,12 +17,18 @@ module.exports = class SpiderAll {
 
     run(){
         let idlist = [];
+        let skip = 8;
         WebUtils.getBodyFromUrl('http://mi.gameasy.top/').then((body) => {
             const $ = cheerio.load(body);
             $('.card').each((i, elem) => {
                 let source_detail_url = $(elem).find('a').attr('href');
                 let id = MathUtils.int( source_detail_url.replace(/[a-z\/\?\=\:\.]/gi, '') );
-                idlist.push(id);
+                if( !skip ){
+                    idlist.push(id);
+                }
+                else{
+                    skip--;
+                }
             });
             DBUtils.setFirstList(idlist);
             console.log(`FIRST一共有${idlist.length}个`);

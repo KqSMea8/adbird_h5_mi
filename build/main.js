@@ -35,6 +35,7 @@ class Builder {
             this.copy('index.css');
             this.copy('swipe.js');
             this.copy('res');
+            this.copy('icon');
             console.log( chalk.green('Builder构建完毕') );
         });
     }

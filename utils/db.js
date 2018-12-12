@@ -118,6 +118,18 @@ class DBUtils {
         return ret;
     }
 
+    getTypeListFromFirst(type){
+        let ret = [];
+        let idlist = fs.readJsonSync('./sqlite/first.json');
+        idlist.forEach((id)=>{
+            let game = this.getGameById(id);
+            if( game.type == type ){
+                ret.push( game );
+            }
+        });
+        return ret;
+    }
+
 }
 
 module.exports = new DBUtils();

@@ -45,22 +45,24 @@
         </div>
         <% for(var i=0; i<bigList.length; i++){ %>
             <div class="title">
+                <div class="icon" style="background-image: url('/static/icon/<%= bigList[i].title %>.webp')"></div>
                 <span><%= bigList[i].title %></span>
                 <a href="<%= bigList[i].href %>">All</a>
             </div>
-            <div>
-                <% for(var m=0; m<8; m++){ %>
-                    <div class="box">
-                        <div class="icon" style="background-image: url('/static/res/<%= bigList[i].list[m].id %>/icon.png')"></div>
-                        <p class="name"><%= bigList[i].list[m].name %></p>
-                        <p class="plays">
-                            <span class="count"><%= bigList[i].list[m].plays %>K+</span>
-                            <span class="label">plays</span>
-                        </p>
-                    </div>
-                <% } %>
-            </div>
+            <% for(var m=0; m<8; m++){ %>
+                <% if( m%4==0 ){ %><div><% } %>
+                <div class="box">
+                    <div class="icon" style="background-image: url('/static/res/<%= bigList[i].list[m].id %>/icon.png')"></div>
+                    <p class="name"><%= bigList[i].list[m].name %></p>
+                    <p class="plays">
+                        <span class="count"><%= bigList[i].list[m].plays %>K+</span>
+                        <span class="label">plays</span>
+                    </p>
+                </div>
+                <% if( m%4==3 ){ %><div class="clear"></div></div><% } %>
+            <% } %>
         <% } %>
+        <div class="verifi">Notice:the content is provided by the content developer . If there are any objections, please give us the original proof and we will remove it after verification.</div>
     </div>
 </body>
 

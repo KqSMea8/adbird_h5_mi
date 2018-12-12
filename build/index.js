@@ -44,16 +44,18 @@ class Builder {
 
     bigList(){
         let ret = [];
-        let type1 = 'Beauty & Girl';
         ret.push({
             title: 'Hot',
             href: '/hot.html',
             list: DBUtils.getHotList()
         });
-        ret.push({
-            title: type1,
-            href: `/category.html?type=${encodeURIComponent(type1)}`,
-            list: DBUtils.getTypeList(type1)
+        let typeList = ['Beauty & Girl', 'Arcade', 'Sports & Racing', 'Strategy', 'Puzzle & Logic', 'Adventure', 'Action & Risk', 'Music'];
+        typeList.forEach((type)=>{
+            ret.push({
+                title: type,
+                href: `/category.html?type=${encodeURIComponent(type)}`,
+                list: DBUtils.getTypeListFromFirst(type)
+            });
         });
         return ret;
     }
