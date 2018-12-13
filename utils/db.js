@@ -79,7 +79,6 @@ class DBUtils {
         if( !ret ){
             console.log( chalk(`没有找到游戏数据id=${id}`) );
         }
-        ret.source_play_url = MathUtils.minPlayUrl(ret.source_play_url);
         return ret;
     }
 
