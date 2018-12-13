@@ -13,13 +13,12 @@
         });
     }
 
-    //开始游戏
-    function startGame(){
-        var url = decodeURIComponent(params.url);
-        if( url.indexOf('http') < 0 ){
-            url = 'https://play.okeyplay.com' + url;
-        }
-        document.getElementById('game').setAttribute('data', url);
+    //添加脚本
+    function appendScript(id) {
+        var script = document.createElement("script");
+        script.type = "text/javascript";
+        script.src = '/static/res/' + id + '/data.js';
+        document.body.appendChild(script);
     }
 
     //菜单
@@ -31,8 +30,12 @@
         });
     }
 
+    window.jsonpGetData = function (gamedata) {
+        document.getElementById('game').setAttribute('data', gamedata.source_play_url);
+    }
+
     getParams();
-    startGame();
     initMenu();
+    appendScript(params.id);
 
 })();

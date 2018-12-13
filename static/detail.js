@@ -51,7 +51,7 @@
                 return './detail.html?id=' + id;
             },
             getPlayUrl: function(){
-                return './play.html?id='+this.id+'&url='+this.game.source_play_url;
+                return './play.html?id='+this.id;
             },
             getImgIcon: function (id) {
                 return 'url("/static/res/' + id + '/icon.png")';
