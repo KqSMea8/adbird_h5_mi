@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset=utf-8>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <title>Helix Jump</title>
+    <meta name="description" content="Helix Jump" />
+    <meta name="author" content="">
+    <meta name="keywords" content="helix jump,helix,online games,html5">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/game-home.component.css">
+    <script src="asset/lib/is.min.js"></script>
+    <script>
+        let PERFORMANCE_OBJECT = {};
+        function calcRenderPerfromance() {
+            console.log(PERFORMANCE_OBJECT);
+            let sortedKeys = Object.keys(PERFORMANCE_OBJECT).sort(
+                function (a, b) { return -(PERFORMANCE_OBJECT[a] - PERFORMANCE_OBJECT[b]) }
+            );
+            let sum = 0;
+            for (let i = 0; i < sortedKeys.length; i++) {
+                sum = sum + PERFORMANCE_OBJECT[sortedKeys[i]];
+            }
+            for (let i = 0; i < sortedKeys.length; i++) {
+                console.log(sortedKeys[i], PERFORMANCE_OBJECT[sortedKeys[i]] / sum * 100 + '%');
+            }
+            console.log(sum);
+            PERFORMANCE_OBJECT = {};
+        }
+    </script>
+</head>
+
+<body>
+    <div id="mainContainer">
+        <div id="content">
+            <video id="contentElement" playsinline muted style="display:none;"></video>
+        </div>
+        <div id="adContainer"></div>
+    </div>
+</body>
+
+</html>
+<script src="//imasdk.googleapis.com/js/sdkloader/ima3.js"></script>
+<script src="./gamead_fill.js"></script>
+<script type="module" src="./bundle.min.js"></script>
