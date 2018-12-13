@@ -112,6 +112,10 @@ class DBUtils {
         return this.hotList;
     }
 
+    getAllGameList(){
+        return this.db;
+    }
+
     getTypes(type){
         return fs.readJsonSync('./sqlite/type.json')
     }

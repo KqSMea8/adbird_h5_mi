@@ -1,8 +1,8 @@
 const request = require('request');
 const fs = require('fs-extra');
+const path = require('path');
 const minify = require('html-minifier').minify;
 const config = { proxy: 'http://web-proxy.oa.com:8080' };
-// const config = {};
 
 class WebUtils {
 
@@ -26,8 +26,13 @@ class WebUtils {
         });
     };
 
-    static minPlayUrl(url) {
-        return encodeURIComponent(url.split('?')[0].replace('https://play.okeyplay.com', ''));
+    static minPlayUrl(id, url) {
+        if( fs.existsSync( path.resolve(__dirname, `../game/${id}`) ) ){
+            return `/game/${id}/index.html`;
+        }
+        else{
+            return url.split('?')[0];
+        }
     }
 
     static minHtml(html) {

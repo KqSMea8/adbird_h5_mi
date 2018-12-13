@@ -101,7 +101,7 @@ module.exports = class SpiderAll {
 
                 WebUtils.getBodyFromUrl(source_game_url).then((game_body)=>{
                     const $game = cheerio.load(game_body);
-                    let source_play_url = $game('object.game').attr('data')
+                    let source_play_url = WebUtils.minPlayUrl( id, $game('object.game').attr('data') );
 
                     //下载icon
                     let iconfile = path.resolve(__dirname, `../static/res/${id}/icon.png`);
@@ -116,7 +116,6 @@ module.exports = class SpiderAll {
                         delete gameinfo.img_icon;
                         delete gameinfo.source_detail_url;
                         delete gameinfo.source_game_url;
-                        gameinfo.source_play_url = WebUtils.minPlayUrl(gameinfo.source_play_url);
                         fs.ensureFileSync(jsonpfile);
                         fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gameinfo)});`);
 
