@@ -121,7 +121,7 @@ class DBUtils {
         let gamelist = fs.readJsonSync('./sqlite/allgames.json');
         gamelist.forEach((game)=>{
             if( game.type == type ){
-                ret.push( this.getGameById(game.id) );
+                ret.push( game );
             }
         });
         return ret;
