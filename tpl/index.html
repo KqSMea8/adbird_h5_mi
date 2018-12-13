@@ -55,7 +55,7 @@
         <% for(var i=0; i<bigList.length; i++){ %>
             <div class="title">
                 <% if( bigList[i].icon ){ %>
-                <div class="icon lazyload" data-src="/static/icon/<%= bigList[i].title %>.png"></div>
+                <div class="icon lazyload" data-src="/static/icon/<%= encodeURIComponent(bigList[i].title) %>.png"></div>
                 <% } %>
                 <span><%= bigList[i].title %></span>
                 <a href="<%= bigList[i].href %>" <% if( bigList[i].icon ){ %>style="margin-top: 13px;"<% } %> >See All</a>
