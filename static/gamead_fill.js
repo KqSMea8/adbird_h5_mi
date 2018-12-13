@@ -10,6 +10,10 @@
     var _ca_pub;
 
     window.fillAdbirdAd = function init() {
+
+        document.getElementById('mainContainer').style.display = 'block';
+        document.getElementById('adContainer').innerHTML = '';
+
         _ca_pub = 'ca-games-pub-6859459009162295';
         _vct = document.getElementById('contentElement');
         setUpIMA();
