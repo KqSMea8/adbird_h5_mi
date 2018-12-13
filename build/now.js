@@ -4,6 +4,7 @@ const fs = require('fs-extra');
 const path = require('path');
 const ejs = require('ejs');
 const DBUtils = require('../utils/db');
+const WebUtils = require('../utils/web');
 
 class Builder {
 
@@ -26,7 +27,7 @@ class Builder {
             list: DBUtils.getNowList(),
         });
         fs.ensureFileSync(releaseFile);
-        fs.writeFileSync(releaseFile, tpl);
+        fs.writeFileSync(releaseFile, WebUtils.minHtml(tpl) );
     }
 
 }
