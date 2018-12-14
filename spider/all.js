@@ -18,6 +18,8 @@ const typeMap = {
     '8': 'Sports & Racing'
 };
 const host = 'http://mi.gameasy.top';
+//开启之后不再从远程加载, 只利用存量数据做校验
+const NoRemoteFetch = true;
 
 module.exports = class SpiderAll {
 
@@ -42,7 +44,22 @@ module.exports = class SpiderAll {
     }
 
     init(){
-        this.run();
+        if( NoRemoteFetch ){
+            this.checkLocal();
+        }
+        else{
+            this.run();
+        }
+    }
+
+    checkLocal(){
+        DBUtils.getAllGameList().forEach((game)=>{
+            if( fs.existsSync( path.resolve(__dirname, `../game/${game.id}`) ) ){
+                game.source_play_url = `/game/${game.id}/index.html`;
+                DBUtils.setGameData(game.id, game);
+            }
+        });
+        DBUtils.saveLocal();
     }
 
     run(){

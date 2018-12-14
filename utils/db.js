@@ -73,6 +73,13 @@ class DBUtils {
         fs.writeFileSync('./sqlite/first.json', JSON.stringify(list));
     }
 
+    setGameData(id, data){
+        let index = this.keyMap[id];
+        if( this.db[index] ){
+            this.db[index] = data;
+        }
+    }
+
     getGameById(id){
         let index = this.keyMap[id];
         let ret = this.db[index];
