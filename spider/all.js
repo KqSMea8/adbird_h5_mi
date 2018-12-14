@@ -57,6 +57,7 @@ module.exports = class SpiderAll {
             if( fs.existsSync( path.resolve(__dirname, `../game/${game.id}`) ) ){
                 game.source_play_url = `/game/${game.id}/index.html`;
                 DBUtils.setGameData(game.id, game);
+                this.saveToJsonp(game.id);
             }
         });
         DBUtils.saveLocal();
@@ -127,14 +128,7 @@ module.exports = class SpiderAll {
                         DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size, like, version, updatetime);
 
                         //整理到jsonp资源
-                        let jsonpfile = path.resolve(__dirname, `../static/res/${id}/data.js`);
-                        let gamedata = DBUtils.getGameById(id);
-                        let gameinfo = ObjectUtils.clone(gamedata);
-                        delete gameinfo.img_icon;
-                        delete gameinfo.source_detail_url;
-                        delete gameinfo.source_game_url;
-                        fs.ensureFileSync(jsonpfile);
-                        fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gameinfo)});`);
+                        this.saveToJsonp(id);
 
                         console.log(`${++count} - ${name}`);
                         cb();
@@ -145,6 +139,17 @@ module.exports = class SpiderAll {
             DBUtils.setTypeList();
             this.done();
         });
+    }
+
+    saveToJsonp(id){
+        let jsonpfile = path.resolve(__dirname, `../static/res/${id}/data.js`);
+        let gamedata = DBUtils.getGameById(id);
+        let gameinfo = ObjectUtils.clone(gamedata);
+        delete gameinfo.img_icon;
+        delete gameinfo.source_detail_url;
+        delete gameinfo.source_game_url;
+        fs.ensureFileSync(jsonpfile);
+        fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gameinfo)});`);
     }
 
 }
