@@ -185,7 +185,10 @@ function btnInit()
 
     $("#btnStart").removeClass("btnDisabled").text(chrome.i18n.getMessage( "start" )).unbind("click").click(function(){
         
-
+        // sendMessage({method: "reloadTab", content: ""});
+        chrome.tabs.query({active: true, currentWindow: true}, function(tabs) {
+            chrome.tabs.update(tabs[0].id, {url: tabs[0].url});
+        });
 
         if(detectType==0){
             $("#btnStart").unbind("click").text(chrome.i18n.getMessage( "downloading" ));
