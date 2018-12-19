@@ -123,6 +123,7 @@ var fileSaveType=2;//1:根据文件类型保存，2:根据文件路径保存
 var detectType = 1;//监控类型，0:自动 1:手动
 var downloadSize = 0;//下载的总文件大小
 
+var gameName = null;
 
 
 //i18n
@@ -464,6 +465,16 @@ ZipFile.create = function(){
     }
 }
 
+function replaceIndex(base64){
+    let startIndex = base64.indexOf(',');
+    let head = base64.substring(0, startIndex+1);
+    let data = base64.substring(startIndex+1);
+    let str = atob(data);
+    str = str.replace(/https\:\/\/play\.quickgame\.top\/assets\/afg\.js\?v\=\d+/gi, './afg.js');
+    data = btoa(str);
+    return head+data;
+}
+
 
 ZipFile.add = function(i){
     if(i<filelist.length){
@@ -474,6 +485,10 @@ ZipFile.add = function(i){
             }
             else{
                 fileName = fileName.replace('play.okeyplay.com/', '');
+                //游戏名
+                if( !gameName ){
+                    gameName = fileName.split('/')[0];
+                }
                 //文件大小
                 downloadSize += filelist[i][6];
                 //规避重名文件：以上逻辑做了比较多的重名过滤，如果还存在极端条件下的重复文件，直接跳过
@@ -482,7 +497,12 @@ ZipFile.add = function(i){
                 }
                 else{
                     zipFilelist.push(fileName);
-                    global_zipWriter.add(fileName, new zip.Data64URIReader(filelist[i][3]), function() {
+                    //改写index
+                    let base64 = filelist[i][3];
+                    if( fileName.indexOf('index.html') >= 0 ){
+                        base64 = replaceIndex(base64);
+                    }
+                    global_zipWriter.add(fileName, new zip.Data64URIReader(base64), function() {
                         ZipFile.add(i+1);
                     });
                 }
@@ -522,9 +542,18 @@ ZipFile.saveHistory = function(){
     }
 
     //保存日志
-    // global_zipWriter.add("iDownload-log.txt", new zip.TextReader(ZipFile.history), function() {
+    let jscode = `(function(){document.writeln("<div id=\'adContainer\' style=\'position: absolute;  top: 0;  left: 0;  right: 0;  bottom: 0;width:100%;height:100%;  margin: auto; z-index: -1;");document.writeln("\'>");document.writeln("    <video id=\'contentElement\' style=\'width: 0;height: 0;\'></video>");document.writeln("</div>");var adsManager;function getParameterByName(name,url){if(!url)url=window.location.href;name=name.replace(/[\[\]]/g,"\\$&");var regex=new RegExp("[?&]"+name+"(=([^&#]*)|&|#|$)"),results=regex.exec(url);if(!results)return null;if(!results[2])return null;return decodeURIComponent(results[2].replace(/\+/g," "));}
+    var client='ca-games-pub-6859459009162295'
+    if(client===null){client='ca-games-pub-6859459009162295';}
+    var url="https://googleads.g.doubleclick.net/pagead/ads?ad_type=image&client="+client+"&description_url="+encodeURIComponent(window.location.href)+"&videoad_start_delay=0&hl=en&max_ad_duration=30000";var videoContent=document.getElementById('contentElement');var adDisplayContainer=new google.ima.AdDisplayContainer(document.getElementById('adContainer'),videoContent);adDisplayContainer.initialize();var adsLoader=new google.ima.AdsLoader(adDisplayContainer);adsLoader.addEventListener(google.ima.AdsManagerLoadedEvent.Type.ADS_MANAGER_LOADED,onAdsManagerLoaded,false);adsLoader.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR,onAdError,false);function onAdError(adErrorEvent){console.log(adErrorEvent.getError());adsManager.destroy();}
+    var adsRequest=new google.ima.AdsRequest();adsRequest.adTagUrl=url;adsRequest.linearAdSlotWidth=320;adsRequest.linearAdSlotHeight=320;adsRequest.nonLinearAdSlotWidth=320;adsRequest.nonLinearAdSlotHeight=320;var contentEndedListener=function(){adsLoader.contentComplete();};videoContent.onended=contentEndedListener;function onAdsManagerLoaded(adsManagerLoadedEvent){adsManager=adsManagerLoadedEvent.getAdsManager(videoContent);try{console.log(document.documentElement.clientWidth,document.documentElement.clientHeight)
+    adsManager.init(document.documentElement.clientWidth,document.documentElement.clientHeight,google.ima.ViewMode.NORMAL);adsManager.addEventListener(google.ima.AdEvent.Type.USER_CLOSE,onClose);adsManager.addEventListener(google.ima.AdEvent.Type.COMPLETE,onClose);adsManager.addEventListener(google.ima.AdErrorEvent.Type.AD_ERROR,onAdError);adsManager.start();}catch(adError){}}
+    function onClose(){document.getElementById('adContainer').style.zIndex=-1;}
+    var quick=function(){};quick.prototype={showAfg:function(){if(true)
+    {document.getElementById('adContainer').style.zIndex=99999999;adsLoader.requestAds(adsRequest);}}};window.QuickAds=new quick})();`;
+    global_zipWriter.add(`${gameName}/afg.js`, new zip.TextReader(jscode), function() {
         ZipFile.save();
-    // });
+    });
 
 }
 
