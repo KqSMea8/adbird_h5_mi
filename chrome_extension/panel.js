@@ -119,8 +119,8 @@ var tabstatusTimeout;//tab状态轮询
 var downloadStatusTimeout;//下载状态轮询
 var tabReloadTimeout;//tab刷新超时
 var config={};//config选项
-var fileSaveType=1;//1:根据文件类型保存，2:根据文件路径保存
-var detectType = 0;//监控类型，0:自动 1:手动
+var fileSaveType=2;//1:根据文件类型保存，2:根据文件路径保存
+var detectType = 1;//监控类型，0:自动 1:手动
 var downloadSize = 0;//下载的总文件大小
 
 
@@ -142,7 +142,7 @@ function txtInit(){
         $("#tipsTypeTxt").text(chrome.i18n.getMessage( "byFileType" ));
         $("#tipsUrlTxt").text(chrome.i18n.getMessage( "byUrl" ));
         $("#tips").text(chrome.i18n.getMessage( "tips" ));
-         $(".downloadStatus").show().html("<p>"+chrome.i18n.getMessage( "modeCurrent" )+"<span style='color:#EB3941'>"+chrome.i18n.getMessage( "mod1" )+"</span></p><p>"+chrome.i18n.getMessage( "tip1" )+"</p>");
+        //  $(".downloadStatus").show().html("<p>"+chrome.i18n.getMessage( "modeCurrent" )+"<span style='color:#EB3941'>"+chrome.i18n.getMessage( "mod1" )+"</span></p><p>"+chrome.i18n.getMessage( "tip1" )+"</p>");
 
 }
 
@@ -156,14 +156,14 @@ function txtInit(){
 function btnInit()
 {
 
-    $("#tipsLoadTimeout").mouseover(function(){
-        $(".config-help").show();
-        $(".config-help .ct").html( chrome.i18n.getMessage( "pageLoadingTimeout" ) );
-    })
-    $("#tipsDownloadTimeout").mouseover(function(){
-        $(".config-help").show();
-        $(".config-help .ct").html( chrome.i18n.getMessage( "resourceDownloadTimeout" ) );
-    })
+    // $("#tipsLoadTimeout").mouseover(function(){
+    //     $(".config-help").show();
+    //     $(".config-help .ct").html( chrome.i18n.getMessage( "pageLoadingTimeout" ) );
+    // })
+    // $("#tipsDownloadTimeout").mouseover(function(){
+    //     $(".config-help").show();
+    //     $(".config-help .ct").html( chrome.i18n.getMessage( "resourceDownloadTimeout" ) );
+    // })
     $("#tipsType").mouseover(function(){
         $(".config-help").show();
         $(".config-help .ct").html("<img src='img/type.png' />");
@@ -183,6 +183,9 @@ function btnInit()
 
 
     $("#btnStart").removeClass("btnDisabled").text(chrome.i18n.getMessage( "start" )).unbind("click").click(function(){
+        
+
+
         if(detectType==0){
             $("#btnStart").unbind("click").text(chrome.i18n.getMessage( "downloading" ));
             createChannel();
@@ -198,17 +201,13 @@ function btnInit()
     $("#btnMode").removeClass("btnDisabled").unbind("click").click(function(){
         if(detectType==1){
             detectType=0;
-            $(".downloadStatus").show().html("<p>"+chrome.i18n.getMessage( "modeChanged" )+"<span style='color:#EB3941'>"+chrome.i18n.getMessage( "mod1" )+"</span></p><p>"+chrome.i18n.getMessage( "tip1" )+"</p>");
-            $("#btnStop").hide(); 
+            // $(".downloadStatus").show().html("<p>"+chrome.i18n.getMessage( "modeChanged" )+"<span style='color:#EB3941'>"+chrome.i18n.getMessage( "mod1" )+"</span></p><p>"+chrome.i18n.getMessage( "tip1" )+"</p>");
         }
         else{
             detectType=1;
-            $(".downloadStatus").show().html("<p>"+chrome.i18n.getMessage( "modeChanged" )+"<span style='color:#EB3941'>"+chrome.i18n.getMessage( "mod2" )+"</span></p><p>"+chrome.i18n.getMessage( "tip2" )+"</p>");
-            $("#btnStop").show(); 
+            // $(".downloadStatus").show().html("<p>"+chrome.i18n.getMessage( "modeChanged" )+"<span style='color:#EB3941'>"+chrome.i18n.getMessage( "mod2" )+"</span></p><p>"+chrome.i18n.getMessage( "tip2" )+"</p>");
         }
     })
-
-    $("#btnStop").addClass("btnDisabled");
 }
 
 function handleTaskStart(taskFlag)
@@ -276,7 +275,7 @@ function handleGetSelectedTab(url){
         zipFilelist = [];
         downloadSize =0;
         ZipFile.init(url);
-        fileSaveType=$("input[name='config_path']:checked").val();
+        // fileSaveType=$("input[name='config_path']:checked").val();
 
         //手动
         if(detectType==1){
@@ -403,7 +402,7 @@ ZipFile.history ="";
 ZipFile.init = function(url){
     ZipFile.history += "url:"+url+"\r\n\r\n";
 
-    zipName = url;
+    zipName = url.split('?')[1].split('&')[0].split('=')[1];
     if(zipName.indexOf('?')>0)zipName=zipName.substring(0,zipName.indexOf('?'));//去除?后面的参数
     if(zipName.indexOf("#") !== -1){zipName = zipName.substring(0,zipName.indexOf("#"));}//去掉#后面的东西
 
@@ -469,35 +468,24 @@ ZipFile.create = function(){
 ZipFile.add = function(i){
     if(i<filelist.length){
         if(filelist[i][1]==1){
-            downloadSize += filelist[i][6];
             var fileName = fileNameDuplicateRemove(filelist[i][0],filelist[i][4]+"."+filelist[i][5]);
-            //根据文件类型保存
-            if(fileSaveType==1){
-                if(filelist[i][5] == "html" || filelist[i][5] == "htm" || filelist[i][5] == "xml")
-                    fileName=fileName;
-                else if(filelist[i][5] == "css")
-                    fileName="css/"+fileName;
-                else if(filelist[i][5] == "js" || filelist[i][5] == "json")
-                    fileName="js/"+fileName; 
-                else if(filelist[i][5] == "png" || filelist[i][5] == "jpg" || filelist[i][5] == "jpeg" || filelist[i][5] == "bpm" || filelist[i][5] == "gif" || filelist[i][5] == "webp" || filelist[i][5] == "ico")
-                    fileName="image/"+fileName;
-                else if(filelist[i][5] == "woff" || filelist[i][5] == "ttf")
-                    fileName="font/"+fileName;
-                else if(filelist[i][5] == "mp3" || filelist[i][5] == "mp4" || filelist[i][5] == "avi" || filelist[i][5] == "ogg" || filelist[i][5] == "webm" || filelist[i][5] == "ogv" || filelist[i][5] == "swf")
-                    fileName="media/"+fileName;
-                else
-                    fileName="other/"+fileName;
-            }
-
-            //规避重名文件：以上逻辑做了比较多的重名过滤，如果还存在极端条件下的重复文件，直接跳过
-            if(zipFilelist.indexOf(fileName)>=0){
+            if( fileName.indexOf('play.okeyplay.com/') < 0 ){
                 ZipFile.add(i+1);
             }
             else{
-                zipFilelist.push(fileName);
-                global_zipWriter.add(fileName, new zip.Data64URIReader(filelist[i][3]), function() {
+                fileName = fileName.replace('play.okeyplay.com/', '');
+                //文件大小
+                downloadSize += filelist[i][6];
+                //规避重名文件：以上逻辑做了比较多的重名过滤，如果还存在极端条件下的重复文件，直接跳过
+                if(zipFilelist.indexOf(fileName)>=0){
                     ZipFile.add(i+1);
-                });
+                }
+                else{
+                    zipFilelist.push(fileName);
+                    global_zipWriter.add(fileName, new zip.Data64URIReader(filelist[i][3]), function() {
+                        ZipFile.add(i+1);
+                    });
+                }
             }
         }
         else{
@@ -522,7 +510,7 @@ ZipFile.saveHistory = function(){
 
     ZipFile.history += chrome.i18n.getMessage( "detect" )+ (successNum+failNum) + chrome.i18n.getMessage( "files" )+"\t";
     ZipFile.history += chrome.i18n.getMessage( "done" ) +successNum+"\t";
-    ZipFile.history += chrome.i18n.getMessage( "fail" ) +failNum+"\r\n";
+    // ZipFile.history += chrome.i18n.getMessage( "fail" ) +failNum+"\r\n";
     if(failNum>0){
         ZipFile.history += "\r\n\r\n"+chrome.i18n.getMessage( "faillist" )+"\r\n";
         for(var i=0;i<filelist.length;i++){
@@ -534,9 +522,9 @@ ZipFile.saveHistory = function(){
     }
 
     //保存日志
-    global_zipWriter.add("iDownload-log.txt", new zip.TextReader(ZipFile.history), function() {
+    // global_zipWriter.add("iDownload-log.txt", new zip.TextReader(ZipFile.history), function() {
         ZipFile.save();
-    });
+    // });
 
 }
 

@@ -7,7 +7,7 @@
     "stop": {"message": "结束"},
     "detect": {"message": "检测到"},
     "done": {"message": "下载完成"},
-    "fail": {"message": "下载失败"},
+    "fail": {"message": "忽略跳过"},
     "files": {"message": "文件"},
     "downloading": {"message": "下载中"},
     "configLoadingTimeout": {"message": "页面加载超时:"},

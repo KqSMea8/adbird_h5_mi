@@ -32,6 +32,9 @@ chrome.extension.onConnect.addListener(function (port) {
     			});
 		    }
         	else if(message.method=="taskStart"){
+				// chrome.tabs.executeScript(message.tabId, {
+    			//     code: "location.reload()",
+    			// });
                 if(taskFlag)
                     port.postMessage({method:"taskStart",tabId:message.tabId,content:1});
                 else{
