@@ -1,16 +1,3 @@
-/*
- * Copy Right: Tencent ISUX
- * Comments: web下载插件
- * Author: kundy
- * Date: 2014-12-24
- */
-
-
-const tab_log = function(json_args) {
-  var args = JSON.parse(unescape(json_args));
-  console[args[0]].apply(console, Array.prototype.slice.call(args, 1));
-}
-
 
 
 
@@ -23,13 +10,7 @@ chrome.extension.onConnect.addListener(function (port) {
     var extensionListener = function (message, sender, sendResponse) {
     	if(message.method && message.tabId){
     		if (message.method == 'sendToConsole'){
-                // return;
-    			//输出到background的调试窗口
-    			console.log( unescape(message.args) );
-    			//输出到当前已选择的tab的窗口
-    			chrome.tabs.executeScript(message.tabId, {
-    			    code: "("+ tab_log + ")('" + message.args + "');",
-    			});
+
 		    }
         	else if(message.method=="taskStart"){
 				// chrome.tabs.executeScript(message.tabId, {
@@ -118,33 +99,6 @@ chrome.runtime.onMessage.addListener(function(request, sender, sendResponse) {
 //消息处理 end
 
 
-
-//重写webRequest的header字段
-//Cache-Control Pragma
-// chrome.webRequest.onBeforeSendHeaders.addListener(
-//     function(details) {
-//     	    // console.log(details);
-//             var exists = false;
-//             // details.requestHeaders.push({name:"X-Requested-With",value:"XMLHttpRequest"})
-//             details.requestHeaders.push({name:"Cache-Control",value:"no-cache"})
-//             details.requestHeaders.push({name:"Pragma",value:"no-cache"})
-
-//             // for (var i = 0; i < details.requestHeaders.length; ++i) {
-//             //     if (details.requestHeaders[i].name === 'Referer') {
-//             //         exists = true;
-//             //         details.requestHeaders[i].value = 'http://2014.zhihu.com';
-//             //         break;
-//             //     }
-//             // }
-//             // if (!exists) {
-//             //  details.requestHeaders.push({ name: 'Referer', value: 'http://2014.zhihu.com'});
-//             // }
-
-//             return { requestHeaders: details.requestHeaders };
-//     },
-//     {urls: ["<all_urls>"]},
-//     ["blocking", "requestHeaders"]
-// );
 
 var selectedTabId = 0;
 var selectedTabUrl="";
