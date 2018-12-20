@@ -2,9 +2,11 @@
 var Status = {
     IDLE: 1,
     SNIFFER: 2,
-    DOWNLOAD: 3,
-    FINAL: 4
+    DOWNLOAD: 3
 }
+
+var hostbase = 'https://play.okeyplay.com';
+var myZipWriter = null;
 
 new Vue({
     el: '#app',
@@ -40,8 +42,8 @@ new Vue({
         downloadCount: function () {
             if (this.filelist.length) {
                 let success = 0;
-                this.filelist.forEach(function(file){
-                    if( file.down == 2 ){
+                this.filelist.forEach(function (file) {
+                    if (file.down == 2) {
                         success++;
                     }
                 });
@@ -62,7 +64,9 @@ new Vue({
         },
         startDownload: function () {
             this.status = Status.DOWNLOAD;
-            this._startDownload();
+            this._createZipWriter(() => {
+                this._startDownload();
+            });
         },
         downstatus: function (value) {
             switch (value) {
@@ -91,10 +95,10 @@ new Vue({
                     if (url.indexOf('http') < 0) {
                         return;
                     }
-                    if (url.indexOf('https://play.okeyplay.com') < 0) {
+                    if (url.indexOf(hostbase) < 0) {
                         return;
                     }
-                    url = url.replace('https://play.okeyplay.com/', '');
+                    url = url.replace(`${hostbase}/`, '');
                     if (!this.gameName) {
                         this.gameName = url.split('/')[0]
                     }
@@ -111,9 +115,10 @@ new Vue({
             var index = this._findDownloadFileIndex();
             if (index < 0) {
                 console.error('结束了');
+                this._onDownloadFinish();
                 return;
             }
-            var url = `https://play.okeyplay.com/${this.gameName}/${this.filelist[index].url}`;
+            var url = `${hostbase}/${this.gameName}/${this.filelist[index].url}`;
             var xhr = new XMLHttpRequest();
             xhr.open("get", url, true);
             xhr.responseType = "blob";
@@ -127,7 +132,7 @@ new Vue({
                         reader.onload = function (event) {
                             self._onDownloadSuccess(index, blobFile.size, event.target.result);
                         };
-                        var source = reader.readAsDataURL(blobFile);
+                        reader.readAsDataURL(blobFile);
                     }
                     else {
                         self._onDownloadFail(index);
@@ -147,10 +152,29 @@ new Vue({
         },
         _onDownloadSuccess: function (index, size, base64) {
             this.filelist[index].down = 2;
-            this._startDownload();
+            myZipWriter.add(this.filelist[index].url, new zip.Data64URIReader(base64), () => {
+                this._startDownload();
+            });
         },
         _onDownloadFail: function (index) {
+            this.filelist[index].down = 1;
+            this._startDownload();
+        },
+        _onDownloadFinish: function () {
+            myZipWriter.close((blob) => {
 
+                var blobURL = URL.createObjectURL(blob);
+                var downloadButton = document.getElementById("btnDownload");
+                var clickEvent = document.createEvent("MouseEvent");
+
+                clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
+                downloadButton.href = blobURL;
+                downloadButton.download = `${this.gameId}.zip`;
+                downloadButton.dispatchEvent(clickEvent);
+
+                myZipWriter = null;
+                this.status = Status.IDLE;
+            });
         },
         _findDownloadFileIndex: function () {
             for (var i = 0; i < this.filelist.length; i++) {
@@ -159,6 +183,26 @@ new Vue({
                 }
             }
             return -1;
+        },
+        _createZipWriter: function (done) {
+            zip.createWriter(new zip.BlobWriter(), function (writer) {
+                myZipWriter = writer;
+                done();
+                // // use a TextReader to read the String to add
+                // writer.add("filename.txt", new zip.TextReader("test!"), function () {
+                //     // onsuccess callback
+
+                //     // close the zip writer
+                //     writer.close(function (blob) {
+                //         // blob contains the zip file as a Blob object
+
+                //     });
+                // }, function (currentIndex, totalIndex) {
+                //     // onprogress callback
+                // });
+            }, function (error) {
+                // onerror callback
+            });
         }
     }
 })
