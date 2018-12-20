@@ -1,0 +1,41 @@
+html,
+body {
+  background-color: white;
+  padding: 0;
+  margin: 0 10px;
+}
+.title {
+  font-size: 20px;
+  margin: 10px 0;
+}
+.btn {
+  display: inline-block;
+  width: 120px;
+  height: 25px;
+  text-align: center;
+  font-size: 14px;
+  line-height: 25px;
+  border: 1px solid #3F51B5;
+  margin: 0 10px 0 0;
+  color: #000;
+  border-radius: 5px;
+  background-color: rgba(33, 150, 243, 0.22);
+}
+.btn:hover {
+  border: 1px solid #FF5722;
+  cursor: pointer;
+}
+.disbtn {
+  border: 1px solid gray;
+  color: gray;
+  background-color: rgba(33, 150, 243, 0) !important;
+}
+.disbtn:hover {
+  border: 1px solid gray !important;
+}
+.filebox {
+  margin: 10px 0;
+}
+.filebox .file {
+  display: block;
+}
