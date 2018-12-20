@@ -58,6 +58,8 @@ new Vue({
             if (this.disStartBtn) {
                 return;
             }
+            this.gameName = null;
+            this.gameId = 0;
             this.filelist = [];
             this.status = Status.SNIFFER;
             this._init();
