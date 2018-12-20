@@ -2,7 +2,8 @@
 var Status = {
     IDLE: 1,
     SNIFFER: 2,
-    DOWNLOAD: 3
+    DOWNLOAD: 3,
+    FINISH: 4
 }
 
 var hostbase = 'https://play.okeyplay.com';
@@ -22,7 +23,7 @@ new Vue({
     },
     computed: {
         disStartBtn: function () {
-            if (this.status == Status.IDLE) {
+            if (this.status == Status.IDLE || this.status == Status.FINISH) {
                 return false;
             }
             return true;
@@ -54,15 +55,24 @@ new Vue({
     },
     methods: {
         startSniffer: function () {
+            if( this.disStartBtn ){
+                return;
+            }
             this.filelist = [];
             this.status = Status.SNIFFER;
             this._init();
             this._reloadTab();
         },
         stopSniffer: function () {
+            if( this.disStopBtn ){
+                return;
+            }
             this.status = Status.IDLE;
         },
         startDownload: function () {
+            if( this.disDownloadBtn ){
+                return;
+            }
             this.status = Status.DOWNLOAD;
             this._createZipWriter(() => {
                 this._startDownload();
@@ -152,7 +162,11 @@ new Vue({
         },
         _onDownloadSuccess: function (index, size, base64) {
             this.filelist[index].down = 2;
-            myZipWriter.add(this.filelist[index].url, new zip.Data64URIReader(base64), () => {
+            var url = this.filelist[index].url;
+            if (url.indexOf('index.html') >= 0) {
+                base64 = this._replaceADSense(base64);
+            }
+            myZipWriter.add(url, new zip.Data64URIReader(base64), () => {
                 this._startDownload();
             });
         },
@@ -173,7 +187,8 @@ new Vue({
                 downloadButton.dispatchEvent(clickEvent);
 
                 myZipWriter = null;
-                this.status = Status.IDLE;
+                this.status = Status.FINISH;
+                // this.filelist = [];
             });
         },
         _findDownloadFileIndex: function () {
@@ -203,6 +218,15 @@ new Vue({
             }, function (error) {
                 // onerror callback
             });
+        },
+        _replaceADSense(base64) {
+            let startIndex = base64.indexOf(',');
+            let head = base64.substring(0, startIndex + 1);
+            let data = base64.substring(startIndex + 1);
+            let str = atob(data);
+            str = str.replace(/https\:\/\/play\.quickgame\.top\/assets\/afg\.js\?v\=\d+/gi, 'http://game.zbkon.com/static/afg.js');
+            data = btoa(str);
+            return head + data;
         }
     }
 })
