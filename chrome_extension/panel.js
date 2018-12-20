@@ -55,7 +55,7 @@ new Vue({
     },
     methods: {
         startSniffer: function () {
-            if( this.disStartBtn ){
+            if (this.disStartBtn) {
                 return;
             }
             this.filelist = [];
@@ -64,13 +64,13 @@ new Vue({
             this._reloadTab();
         },
         stopSniffer: function () {
-            if( this.disStopBtn ){
+            if (this.disStopBtn) {
                 return;
             }
             this.status = Status.IDLE;
         },
         startDownload: function () {
-            if( this.disDownloadBtn ){
+            if (this.disDownloadBtn) {
                 return;
             }
             this.status = Status.DOWNLOAD;
@@ -129,6 +129,7 @@ new Vue({
                 return;
             }
             var url = `${hostbase}/${this.gameName}/${this.filelist[index].url}`;
+            console.log(`开始下载: ${url}`);
             var xhr = new XMLHttpRequest();
             xhr.open("get", url, true);
             xhr.responseType = "blob";
@@ -215,8 +216,9 @@ new Vue({
                 // }, function (currentIndex, totalIndex) {
                 //     // onprogress callback
                 // });
-            }, function (error) {
-                // onerror callback
+            }, (error) => {
+                console.error(error);
+                this._startDownload();
             });
         },
         _replaceADSense(base64) {
