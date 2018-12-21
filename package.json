@@ -5,8 +5,7 @@
   "main": "main.js",
   "scripts": {
     "spider": "node spider/index.js",
-    "build": "node  build/main.js",
-    "checkgame": "node build/checkgame.js"
+    "build": "node  build/main.js"
   },
   "repository": "",
   "keywords": [],
