@@ -1,0 +1,1 @@
+jsonpGetData({"id":"499","name":"Rush 3D","type":"Arcade","desc":"Avoid the wall when moving down the line each time the score increases.","portrait":true,"is3d":false,"source_play_url":"https://play.okeyplay.com/rush-3d/index.html","stars":10,"plays":587,"img_banner":"","size":"2.80MB","like":[362,302,276],"version":"1.0.0","updatetime":"2018-12-21"});

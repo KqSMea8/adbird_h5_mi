@@ -53,7 +53,7 @@ class DBUtils {
         this.saveLocal();
     }
 
-    setTypeList(){
+    setTypeList() {
         let typeList = {};
         this.db.forEach((val, index) => {
             typeList[val.type] = true;
@@ -61,90 +61,94 @@ class DBUtils {
         fs.writeFileSync('./sqlite/type.json', JSON.stringify(Object.keys(typeList)));
     }
 
-    setNowList(list){
+    setNowList(list) {
         fs.writeFileSync('./sqlite/now.json', JSON.stringify(list));
     }
 
-    setHotList(list){
+    setHotList(list) {
         fs.writeFileSync('./sqlite/hot.json', JSON.stringify(list));
     }
 
-    setFirstList(list){
+    setFirstList(list) {
         fs.writeFileSync('./sqlite/first.json', JSON.stringify(list));
     }
 
-    setGameData(id, data){
+    setGameDataById(id, data) {
         let index = this.keyMap[id];
-        if( this.db[index] ){
+        if (this.db[index]) {
             this.db[index] = data;
+        }
+        else {
+            this.db.push(data);
+            this.keyMap[id] = this.db.length - 1;
         }
     }
 
-    getGameById(id){
+    getGameById(id) {
         let index = this.keyMap[id];
         let ret = this.db[index];
-        if( !ret ){
-            console.log( chalk(`没有找到游戏数据id=${id}`) );
+        if (!ret) {
+            console.log(chalk(`没有找到游戏数据id=${id}`));
         }
         return ret;
     }
 
-    getChannelList(){
+    getChannelList() {
         return fs.readJsonSync('./sqlite/channel.json')
     }
 
-    getNowList(){
-        if( this.nowList ){
+    getNowList() {
+        if (this.nowList) {
             return this.nowList;
         }
         let idlist = fs.readJsonSync('./sqlite/now.json');
         let ret = [];
-        idlist.forEach((id)=>{
-            ret.push( this.getGameById(id) );
+        idlist.forEach((id) => {
+            ret.push(this.getGameById(id));
         });
         this.nowList = ret;
         return this.nowList;
     }
 
-    getHotList(){
-        if( this.hotList ){
+    getHotList() {
+        if (this.hotList) {
             return this.hotList;
         }
         let idlist = fs.readJsonSync('./sqlite/hot.json');
         let ret = [];
-        idlist.forEach((id)=>{
-            ret.push( this.getGameById(id) );
+        idlist.forEach((id) => {
+            ret.push(this.getGameById(id));
         });
         this.hotList = ret;
         return this.hotList;
     }
 
-    getAllGameList(){
+    getAllGameList() {
         return this.db;
     }
 
-    getTypes(type){
+    getTypes(type) {
         return fs.readJsonSync('./sqlite/type.json')
     }
 
-    getTypeList(type){
+    getTypeList(type) {
         let ret = [];
         let gamelist = fs.readJsonSync('./sqlite/allgames.json');
-        gamelist.forEach((game)=>{
-            if( game.type == type ){
-                ret.push( game );
+        gamelist.forEach((game) => {
+            if (game.type == type) {
+                ret.push(game);
             }
         });
         return ret;
     }
 
-    getTypeListFromFirst(type){
+    getTypeListFromFirst(type) {
         let ret = [];
         let idlist = fs.readJsonSync('./sqlite/first.json');
-        idlist.forEach((id)=>{
+        idlist.forEach((id) => {
             let game = this.getGameById(id);
-            if( game.type == type ){
-                ret.push( game );
+            if (game.type == type) {
+                ret.push(game);
             }
         });
         return ret;
