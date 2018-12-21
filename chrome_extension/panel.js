@@ -117,6 +117,7 @@ new Vue({
                     url = url.replace(`${this.gameName}/`, '');
                     this.filelist.push({
                         url: url,
+                        path: url.split('?')[0],
                         down: 0
                     });
                 }
@@ -169,7 +170,7 @@ new Vue({
             if (url.indexOf('index.html') >= 0) {
                 base64 = this._replaceADSense(base64);
             }
-            myZipWriter.add(url, new zip.Data64URIReader(base64), () => {
+            myZipWriter.add(this.filelist[index].path, new zip.Data64URIReader(base64), () => {
                 this._startDownload();
             });
         },

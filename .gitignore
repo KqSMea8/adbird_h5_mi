@@ -3,3 +3,4 @@ release
 static/*.css
 .DS_Store
 static/less/*.css
+chrome_extension.zip
