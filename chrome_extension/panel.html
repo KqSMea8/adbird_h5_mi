@@ -15,12 +15,14 @@
             <span class="btn" v-bind:class="{disbtn: disStartBtn}" v-on:click="startSniffer()">开始</span>
             <span class="btn" v-bind:class="{disbtn: disStopBtn}" v-on:click="stopSniffer()">结束</span>
             <span class="btn" v-bind:class="{disbtn: disDownloadBtn}" v-on:click="startDownload()">批处理{{downloadCount}}</span>
+            <span class="label"><input type="checkbox" v-model="noad">NoAD</span>
         </div>
         <div class="filebox">
             <span class="file" v-for="(index, request) in filelist" v-bind:style="{color:downstatus(request.down)}">{{index+1}} - {{request.url}}</span>
         </div>
     </div>
     <a href="#" id="btnDownload" style="display:none;"></a>
+    <a href="#" id="btnDownloadNoAD" style="display:none;"></a>
 </body>
 
 <script type="text/javascript" src="vue.js"></script>

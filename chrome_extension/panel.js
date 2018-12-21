@@ -15,7 +15,8 @@ new Vue({
         status: Status.IDLE,
         filelist: [],
         gameName: null,
-        gameId: 0
+        gameId: 0,
+        noad: false
     },
     created: function () {
         this._init();
@@ -168,7 +169,12 @@ new Vue({
             this.filelist[index].down = 2;
             var url = this.filelist[index].url;
             if (url.indexOf('index.html') >= 0) {
-                base64 = this._replaceADSense(base64);
+                if( this.noad ){
+                    base64 = this._removeADSense(base64);
+                }
+                else{
+                    base64 = this._replaceADSense(base64);
+                }
             }
             myZipWriter.add(this.filelist[index].path, new zip.Data64URIReader(base64), () => {
                 this._startDownload();
@@ -187,7 +193,7 @@ new Vue({
 
                 clickEvent.initMouseEvent("click", true, true, window, 0, 0, 0, 0, 0, false, false, false, false, 0, null);
                 downloadButton.href = blobURL;
-                downloadButton.download = `${this.gameId}.zip`;
+                downloadButton.download = `${this.gameId}${this.noad?'-noad':''}.zip`;
                 downloadButton.dispatchEvent(clickEvent);
 
                 myZipWriter = null;
@@ -230,6 +236,16 @@ new Vue({
             let data = base64.substring(startIndex + 1);
             let str = atob(data);
             str = str.replace(/https\:\/\/play\.quickgame\.top\/assets\/afg\.js\?v\=\d+/gi, 'http://game.zbkon.com/static/afg.js');
+            data = btoa(str);
+            return head + data;
+        },
+        _removeADSense(base64) {
+            let startIndex = base64.indexOf(',');
+            let head = base64.substring(0, startIndex + 1);
+            let data = base64.substring(startIndex + 1);
+            let str = atob(data);
+            str = str.replace(/play\.quickgame\.top\/assets\/afg\.js\?v\=\d+/gi, '');
+            str = str.replace(/imasdk\.googleapis\.com\/js\/sdkloader\/ima3\.js/gi, '');
             data = btoa(str);
             return head + data;
         }
