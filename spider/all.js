@@ -19,7 +19,7 @@ const typeMap = {
 };
 const host = 'http://mi.gameasy.top';
 //开启之后不再从远程加载, 只利用存量数据做校验
-const NoRemoteFetch = false;
+const NoRemoteFetch = true;
 
 module.exports = class SpiderAll {
 
