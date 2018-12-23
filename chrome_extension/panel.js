@@ -246,6 +246,7 @@ new Vue({
             let str = atob(data);
             str = str.replace(/play\.quickgame\.top\/assets\/afg\.js\?v\=\d+/gi, '');
             str = str.replace(/imasdk\.googleapis\.com\/js\/sdkloader\/ima3\.js/gi, '');
+            str = str.replace(/\<\/head\>/gi, '<script>window.QuickAds={showAfg:function(){}}</script></head>');
             data = btoa(str);
             return head + data;
         }
