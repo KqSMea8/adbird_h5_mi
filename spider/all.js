@@ -19,7 +19,7 @@ const typeMap = {
 };
 const host = 'http://mi.gameasy.top';
 //开启之后不再从远程加载, 只利用存量数据做校验
-const NoRemoteFetch = true;
+const NoRemoteFetch = false;
 
 module.exports = class SpiderAll {
 
@@ -43,18 +43,18 @@ module.exports = class SpiderAll {
         this.init();
     }
 
-    init(){
-        if( NoRemoteFetch ){
+    init() {
+        if (NoRemoteFetch) {
             this.checkLocal();
         }
-        else{
+        else {
             this.run();
         }
     }
 
-    checkLocal(){
-        DBUtils.getAllGameList().forEach((game)=>{
-            if( fs.existsSync( path.resolve(__dirname, `../game/${game.id}`) ) ){
+    checkLocal() {
+        DBUtils.getAllGameList().forEach((game) => {
+            if (fs.existsSync(path.resolve(__dirname, `../game/${game.id}`))) {
                 game.source_play_url = `/game/${game.id}/index.html`;
                 DBUtils.setGameDataById(game.id, game);
                 this.saveToJsonp(game.id);
@@ -63,7 +63,7 @@ module.exports = class SpiderAll {
         DBUtils.saveLocal();
     }
 
-    run(){
+    run() {
         async.eachOfSeries(typeMap, (type, index, cb) => {
             let url = `${host}/all/category?id=${index}`;
             WebUtils.getBodyFromUrl(url).then((body) => {
@@ -83,9 +83,15 @@ module.exports = class SpiderAll {
         });
     }
 
-    parse(){
+    parse() {
         let count = 0;
-        async.eachOfSeries(this.gameList, (val, index, cb)=>{
+        let continueNum = this.getContinueNum();
+        async.eachOfSeries(this.gameList, (val, index, cb) => {
+            if (count < continueNum) {
+                count++;
+                cb();
+                return;
+            }
             let source_detail_url = val.source_detail_url;
             let id = val.id;
             WebUtils.getBodyFromUrl(source_detail_url).then((detail_body) => {
@@ -94,54 +100,56 @@ module.exports = class SpiderAll {
                 let type = $('span.tag').eq(0).text();
                 let desc = $('div.desc').eq(0).text();
                 let source_game_url = `${host}/play?id=${id}`;
-                let stars = MathUtils.float( $('i.rate').eq(0).text() );
-                let plays = MathUtils.int( $('i.count').text().replace('已经玩了 ', '').replace('K+ 次', '').replace('K+ Players', '').replace(',', '') );
+                let stars = MathUtils.float($('i.rate').eq(0).text());
+                let plays = MathUtils.int($('i.count').text().replace('已经玩了 ', '').replace('K+ 次', '').replace('K+ Players', '').replace(',', ''));
                 let img_icon = $('.span-img img').attr('src');
                 let size = '1.0MB';
                 let version = '1.0';
                 var updatetime = '2018-11-13';
-                $('.details .items .size').each((i_, elem_)=>{
-                    if( i_ == 0 ){
+                $('.details .items .size').each((i_, elem_) => {
+                    if (i_ == 0) {
                         size = $(elem_).text();
                     }
-                    if( i_ == 1 ){
+                    if (i_ == 1) {
                         version = $(elem_).text();
                     }
-                    if( i_ == 2 ){
+                    if (i_ == 2) {
                         updatetime = $(elem_).text();
                     }
                 });
                 let like = [];
-                $('.like li').each((i_, elem_)=>{
+                $('.like li').each((i_, elem_) => {
                     let id_ = $(elem_).find('a').attr('href').replace(/[a-z\/\?\=\:\.]/gi, '');
-                    like.push( MathUtils.int(id_) );
+                    like.push(MathUtils.int(id_));
                 });
 
-                WebUtils.getBodyFromUrl(source_game_url).then((game_body)=>{
+                WebUtils.getBodyFromUrl(source_game_url).then((game_body) => {
                     const $game = cheerio.load(game_body);
-                    let source_play_url = WebUtils.minPlayUrl( id, $game('object.game').attr('data') );
+                    let source_play_url = WebUtils.minPlayUrl(id, $game('object.game').attr('data'));
                     //下载icon
                     let iconfile = path.resolve(__dirname, `../static/res/${id}/icon.png`);
                     fs.ensureFileSync(iconfile);
                     // console.log(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size, like, version, updatetime);
-                    WebUtils.download(img_icon, iconfile).then(()=>{
+                    WebUtils.download(img_icon, iconfile).then(() => {
                         DBUtils.setGameData(id, name, type, desc, source_detail_url, source_game_url, source_play_url, stars, plays, img_icon, size, like, version, updatetime);
-                        setTimeout(()=>{
+                        setTimeout(() => {
                             //整理到jsonp资源
                             this.saveToJsonp(id);
                             console.log(`${++count} - ${id} - ${name}`);
+                            this.recordContinue(count);
                             cb();
                         }, 100);
                     });
                 });
             });
-        }, ()=>{
+        }, () => {
             DBUtils.setTypeList();
+            this.recordContinue(0);
             this.done();
         });
     }
 
-    saveToJsonp(id){
+    saveToJsonp(id) {
         let jsonpfile = path.resolve(__dirname, `../static/res/${id}/data.js`);
         let gamedata = DBUtils.getGameById(id);
         let gameinfo = ObjectUtils.clone(gamedata);
@@ -150,6 +158,18 @@ module.exports = class SpiderAll {
         delete gameinfo.source_game_url;
         fs.ensureFileSync(jsonpfile);
         fs.writeFileSync(jsonpfile, `jsonpGetData(${JSON.stringify(gameinfo)});`);
+    }
+
+    recordContinue(num) {
+        fs.writeFileSync(path.resolve(__dirname, './continue.txt'), num+'');
+    }
+
+    getContinueNum() {
+        let ret = parseInt(fs.readFileSync(path.resolve(__dirname, './continue.txt')), 10);
+        if (isNaN(ret)) {
+            ret = 0;
+        }
+        return ret;
     }
 
 }

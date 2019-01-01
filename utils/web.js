@@ -2,7 +2,8 @@ const request = require('request');
 const fs = require('fs-extra');
 const path = require('path');
 const minify = require('html-minifier').minify;
-const config = { proxy: 'http://web-proxy.oa.com:8080', timeout: 5000 };
+// const config = { proxy: 'http://web-proxy.oa.com:8080', timeout: 5000 };
+const config = { timeout: 5000 };
 
 class WebUtils {
 
@@ -11,7 +12,8 @@ class WebUtils {
             request(url, config, (error, response, body) => {
                 resolve(body);
             });
-        });
+        })
+        .catch(error => console.log('caught', error.message))
     }
 
     static download(uri, filename) {
@@ -32,7 +34,9 @@ class WebUtils {
                     // console.log(3333333, err);
                 })
             // });
-        });
+        })
+        .catch(error => console.log('caught', error.message))
+
     };
 
     static minPlayUrl(id, url) {
