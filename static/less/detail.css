@@ -1,0 +1,212 @@
+::-webkit-scrollbar {
+  width: 0;
+}
+* {
+  font-size: 12px;
+  color: #333333;
+}
+a {
+  text-decoration: none;
+}
+.clear {
+  clear: both;
+}
+html,
+body {
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  font-family: Roboto, Lato, sans-serif !important;
+}
+.header {
+  font-size: 22px;
+  line-height: 50px;
+  height: 50px;
+  text-align: center;
+}
+.header .back {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(/static/icon/back.png);
+  display: block;
+  width: 50px;
+  height: 20px;
+  position: absolute;
+  top: 15px;
+  left: 5px;
+}
+.header .home {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url(/static/icon/home.png);
+  display: block;
+  width: 50px;
+  height: 22px;
+  position: absolute;
+  top: 15px;
+  right: 5px;
+}
+.line {
+  height: 7px;
+  width: 100%;
+  background: #f5f5f5;
+  margin: 10px 0;
+}
+.startplay {
+  position: fixed;
+  width: 100%;
+  height: 68px;
+  background: rgba(255, 255, 255, 0.8);
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 15px 0;
+  box-sizing: border-box;
+}
+.startplay a {
+  color: white;
+  background: #FFB700;
+  margin: 0 auto;
+  width: 188px;
+  height: 36px;
+  line-height: 36px;
+  border-radius: 5px;
+  text-align: center;
+  z-index: 999;
+  display: block;
+}
+.bottom {
+  height: 110px;
+}
+.content {
+  padding: 0 12px;
+}
+.content .detail {
+  padding: 10px 0;
+}
+.content .detail .icon {
+  width: 90px;
+  height: 90px;
+  border-radius: 10px;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  float: left;
+}
+.content .detail .info {
+  float: left;
+  margin-left: 20px;
+  padding-top: 4px;
+}
+.content .detail .info .name {
+  font-size: 17px;
+  vertical-align: top;
+  font-weight: 600;
+  height: 20px;
+  margin: 0;
+}
+.content .detail .info .type {
+  margin: 4px 0 0 0;
+  font-size: 12px;
+  vertical-align: top;
+  color: grey!important;
+  background: 0 0!important;
+}
+.content .detail .info .stars {
+  margin: 4px 0 0 0;
+  position: relative;
+  letter-spacing: 1px;
+}
+.content .detail .info .stars .starbox {
+  color: #f97c33;
+}
+.content .detail .info .stars .starprogress {
+  position: absolute;
+  left: 0px;
+  color: #f97c33;
+}
+.content .detail .info .stars .label {
+  color: #919191;
+}
+.content .detail .info .other {
+  margin: 4px 0 0 0;
+}
+.content .detail .info .other .icon1 {
+  background-image: url('/static/icon/game.png');
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+.content .detail .info .other .plays {
+  color: #919191;
+}
+.content .detail .info .other .icon2 {
+  margin-left: 15px;
+  background-image: url('/static/icon/size.png');
+  width: 15px;
+  height: 15px;
+  display: inline-block;
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  vertical-align: middle;
+}
+.content .detail .info .other .size {
+  color: #919191;
+}
+.content .title {
+  font-size: 16px;
+  font-weight: bold;
+}
+.content .wrap {
+  margin-top: 10px;
+}
+.content .wrap .likebox {
+  margin: 5px 0;
+}
+.content .wrap .likebox .icon {
+  width: 43px;
+  height: 43px;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 50%;
+}
+.content .wrap .likebox .name {
+  line-height: 43px;
+  font-size: 14px;
+  font-weight: bold;
+  vertical-align: top;
+  margin-left: 8px;
+}
+.content .wrap .likebox .play {
+  float: right;
+  color: white;
+  background: #FFB700;
+  width: 70px;
+  height: 30px;
+  margin-top: 8px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 30px;
+}
+.content .wrap .desc {
+  text-indent: 2em;
+  display: block;
+  margin: 0 0 5px 0;
+  color: #7e848c;
+}
+.content .wrap .info {
+  color: #7e848c;
+  display: block;
+}

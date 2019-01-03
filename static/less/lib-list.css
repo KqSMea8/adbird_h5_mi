@@ -1,0 +1,44 @@
+.content .listwrap {
+  margin-top: 10px;
+}
+.content .listwrap .item {
+  margin: 10px 0;
+}
+.content .listwrap .item .icon {
+  width: 63px;
+  height: 63px;
+  display: inline-block;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  border-radius: 10px;
+}
+.content .listwrap .item .detail {
+  display: inline-block;
+  margin-left: 8px;
+  vertical-align: top;
+}
+.content .listwrap .item .detail .name {
+  font-size: 16px;
+  margin: 5px 0 6px;
+}
+.content .listwrap .item .detail .plays {
+  margin: 0;
+}
+.content .listwrap .item .detail .plays .number {
+  color: #F99D00;
+}
+.content .listwrap .item .detail .plays .label {
+  color: #9d9d9d;
+}
+.content .listwrap .item .play {
+  float: right;
+  color: white;
+  background: #efa408;
+  width: 63px;
+  height: 25px;
+  margin-top: 8px;
+  border-radius: 5px;
+  text-align: center;
+  line-height: 25px;
+}
