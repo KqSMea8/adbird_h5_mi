@@ -89,6 +89,7 @@ class DBUtils {
         let ret = this.db[index];
         if (!ret) {
             console.log(chalk(`没有找到游戏数据id=${id}`));
+            return null;
         }
         return ret;
     }
@@ -117,7 +118,8 @@ class DBUtils {
         let idlist = fs.readJsonSync('./sqlite/hot.json');
         let ret = [];
         idlist.forEach((id) => {
-            ret.push(this.getGameById(id));
+            let obj = this.getGameById(id);
+            obj && ret.push(obj);
         });
         this.hotList = ret;
         return this.hotList;
