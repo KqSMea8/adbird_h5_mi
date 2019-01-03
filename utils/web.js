@@ -19,7 +19,7 @@ class WebUtils {
     static download(uri, filename) {
         return new Promise((resolve, reject) => {
 
-            if( fs.existsSync(filename) ){
+            if( fs.existsSync(filename) && fs.statSync(filename).size > 10 ){
                 resolve();
                 return;
             }
