@@ -10,10 +10,28 @@
 <meta property="og:title" content="Quick Game-No install，Enjoy the best casual game center!" />
 <meta property="og:description" content="No install，Enjoy the best casual game center!" />
 <title>Gamebox-The best casual game center which you don't need to download any app!</title>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+
+<!-- adx -->
+<script async='async' src='https://www.googletagservices.com/tag/js/gpt.js'></script>
+<script>
+  var googletag = googletag || {};
+  googletag.cmd = googletag.cmd || [];
+</script>
+
+<script>
+  googletag.cmd.push(function() {
+    googletag.defineSlot('<%= channel.adx_detail.slot %>', <%= channel.adx_detail.size %>, '<%= channel.adx_detail.id %>').addService(googletag.pubads());
+    googletag.pubads().enableSingleRequest();
+    googletag.enableServices();
+  });
+</script>
+<!-- adx -->
+
+
 <script async src="https://www.googletagmanager.com/gtag/js?id=UA-109832714-7"></script>
 <script>
-    window.adsbygoogle = [];
+    // window.adsbygoogle = [];
     window.dataLayer = window.dataLayer || [];
     function gtag() { dataLayer.push(arguments); }
     gtag('js', new Date());
@@ -50,14 +68,20 @@
                 <div class="clear"></div>
             </div>
         </div>
-        <ins class="adsbygoogle"
+        <!-- adx -->
+        <div id='<%= channel.adx_detail.id %>' style='height:250px; width:300px; margin: 0 auto;'>
+            <script>
+            googletag.cmd.push(function() { googletag.display('<%= channel.adx_detail.id %>'); });
+            </script>
+        </div>
+        <!-- <ins class="adsbygoogle"
             style="display:inline-block;width:100%;height:250px" 
             data-full-width-responsive="true" 
             data-ad-client="<%= channel.ca_pub %>"
             data-ad-slot="<%= channel.ad_detail %>"></ins>
         <script>
         (adsbygoogle = window.adsbygoogle || []).push({});
-        </script>
+        </script> -->
         <div class="content">
             <div class="title">You May Like</div>
             <div class="wrap">
