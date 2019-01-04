@@ -6,7 +6,7 @@
         "adx_index": {
             "id": "div-gpt-ad-1546570813541-0",
             "slot": "/70071061/szzn-xl/300x250-01-xl-szzn",
-            "size": "[300, 250]"
+            "size": "[window.innerWidth, 250]"
         },
         "ad_detail": "6721963471",
         "ad_play": "7460330070"
@@ -18,7 +18,7 @@
         "adx_index": {
             "id": "div-gpt-ad-1546571336734-0",
             "slot": "/70071061/szzn-xl/300x250-03-xl-szzn",
-            "size": "[300, 250]"
+            "size": "[window.innerWidth, 250]"
         },
         "ad_detail": "4038415220",
         "ad_play": "8104818595"
