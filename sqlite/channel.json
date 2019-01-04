@@ -13,7 +13,12 @@
             "slot": "/70071061/szzn-xl/300x250-02-xl-szzn",
             "size": "[300, 250]"
         },
-        "ad_play": "7460330070"
+        "adx_play": {
+            "id": "div-gpt-ad-1546570944923-0",
+            "slot": "/70071061/szzn-xl/320x100-01-xl-szzn",
+            "size": "[320, 100]"
+        },
+        "adx_game_paster": "https://googleads.g.doubleclick.net/pagead/ads?client=ca-games-pub-3805269208012660&slotname=game-01-xl-szzn&ad_type=video_image&description_url=http%3A%2F%2Fwww.zbkon.com&max_ad_duration=30000&videoad_start_delay=0&vpmute=0&vpa=0"
     },
     {
         "code": 620,
@@ -29,6 +34,11 @@
             "slot": "/70071061/szzn-xl/300x250-04-xl-szzn",
             "size": "[300, 250]"
         },
-        "ad_play": "8104818595"
+        "adx_play": {
+            "id": "div-gpt-ad-1546571424264-0",
+            "slot": "/70071061/szzn-xl/320x100-02-xl-szzn",
+            "size": "[320, 100]"
+        },
+        "adx_game_paster": "https://googleads.g.doubleclick.net/pagead/ads?client=ca-games-pub-3805269208012660&slotname=game-02-xl-szzn&ad_type=video_image&description_url=http%3A%2F%2Fwww.zbkon.com&max_ad_duration=30000&videoad_start_delay=0&vpmute=0&vpa=0"
     }
 ]
