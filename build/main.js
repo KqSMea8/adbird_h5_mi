@@ -64,6 +64,7 @@ class Builder {
         }, () => {
             this.copyCss(['index', 'detail', 'play', 'now'], true);
             this.copyJs(['vue', 'detail', 'play', 'gamead', 'lazyload', 'afg'], true);
+            this.copyJs(['script_adx/play'], true);
             this.copy('res');
             this.copy('icon');
             console.log(chalk.green('Builder构建完毕'));
@@ -105,6 +106,7 @@ class Builder {
                     console.log(chalk.red(name + '->' + result.error));
                 }
                 else {
+                    fs.ensureFileSync(out);
                     fs.writeFileSync(out, result.code);
                 }
             }
