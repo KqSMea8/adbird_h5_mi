@@ -1,8 +1,6 @@
 [
     {
         "code": 610,
-        "ca_pub": "ca-pub-6859459009162295",
-        "ca_games_pub": "ca-games-pub-6859459009162295",
         "adx_index": {
             "id": "div-gpt-ad-1546570813541-0",
             "slot": "/70071061/szzn-xl/300x250-01-xl-szzn",
@@ -22,8 +20,6 @@
     },
     {
         "code": 620,
-        "ca_pub": "ca-pub-2889951372051651",
-        "ca_games_pub": "ca-games-pub-2889951372051651",
         "adx_index": {
             "id": "div-gpt-ad-1546571336734-0",
             "slot": "/70071061/szzn-xl/300x250-03-xl-szzn",
@@ -40,5 +36,24 @@
             "size": "[320, 100]"
         },
         "adx_game_paster": "https://googleads.g.doubleclick.net/pagead/ads?client=ca-games-pub-3805269208012660&slotname=game-02-xl-szzn&ad_type=video_image&description_url=http%3A%2F%2Fwww.zbkon.com&max_ad_duration=30000&videoad_start_delay=0&vpmute=0&vpa=0"
+    },
+    {
+        "code": 630,
+        "adx_index": {
+            "id": "div-gpt-ad-1546571456923-0",
+            "slot": "/70071061/szzn-xl/300x250-05-xl-szzn",
+            "size": "[300, 250]"
+        },
+        "adx_detail": {
+            "id": "div-gpt-ad-1546571477450-0",
+            "slot": "/70071061/szzn-xl/300x250-06-xl-szzn",
+            "size": "[300, 250]"
+        },
+        "adx_play": {
+            "id": "div-gpt-ad-1546571542325-0",
+            "slot": "/70071061/szzn-xl/320x100-03-xl-szzn",
+            "size": "[320, 100]"
+        },
+        "adx_game_paster": "https://googleads.g.doubleclick.net/pagead/ads?client=ca-games-pub-3805269208012660&slotname=game-03-xl-szzn&ad_type=video_image&description_url=http%3A%2F%2Fwww.zbkon.com&max_ad_duration=30000&videoad_start_delay=0&vpmute=0&vpa=0"
     }
 ]
