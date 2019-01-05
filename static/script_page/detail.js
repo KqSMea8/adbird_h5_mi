@@ -61,6 +61,14 @@
                     return name.slice(0, 15) + '..';
                 }
                 return name;
+            },
+            jumpUrl: function(defaultId){
+                try{
+                    return 'detail.html?id='+(this.game.like[0].id||defaultId);
+                }
+                catch(err){
+                    return 'detail.html?id='+defaultId;
+                }
             }
         }
     })

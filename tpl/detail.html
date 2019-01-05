@@ -74,6 +74,10 @@
             googletag.cmd.push(function() { googletag.display('<%= channel.adx_detail.id %>'); });
             </script>
         </div>
+        <div class="quickjump">
+            <a v-bind:href="jumpUrl(502)" class="prev"></a>
+            <a v-bind:href="jumpUrl(501)" class="next"></a>
+        </div>
         <div class="content">
             <div class="title">You May Like</div>
             <div class="wrap">
@@ -108,4 +112,4 @@
 
 </html>
 <script src="/static/vue.js"></script>
-<script src="/static/detail.js"></script>
+<script src="/static/script_page/detail.js"></script>

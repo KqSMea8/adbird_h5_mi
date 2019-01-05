@@ -63,7 +63,8 @@ class Builder {
             }
         }, () => {
             this.copyCss(['index', 'detail', 'play', 'now'], true);
-            this.copyJs(['vue', 'detail', 'play', 'gamead', 'lazyload', 'afg'], true);
+            this.copyJs(['vue', 'play', 'gamead', 'lazyload', 'afg'], true);
+            this.copyJs(['script_page/detail'], true);
             this.copyJs(['script_adx/play'], true);
             this.copy('res');
             this.copy('icon');
