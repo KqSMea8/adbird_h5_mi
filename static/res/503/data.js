@@ -1,0 +1,1 @@
+jsonpGetData({"id":"503","name":"Blast Balls","type":"Arcade","desc":"Shoot the ball, collect the gold, survive longer is victory!","portrait":true,"is3d":false,"source_play_url":"https://play.quickgame.top/blast-balls/index.html","stars":10,"plays":712,"img_banner":"","size":"5.20MB","like":[216,500,85],"version":"1.0.0","updatetime":"2019-01-05"});

@@ -23,17 +23,15 @@ class WebUtils {
                 resolve();
                 return;
             }
-            // console.log(1111111, uri);
-            // request.head(uri, function (err, res, body) {
-                // console.log(22222222, err, res);
-                // console.log('content-type:', res.headers['content-type']);
-                // console.log('content-length:', res.headers['content-length']);
-                request(uri, config).pipe(fs.createWriteStream(filename)).on('close', () => {
-                    resolve();
-                }).on('error', (err)=>{
-                    // console.log(3333333, err);
-                })
-            // });
+            if( uri.slice(0,2) == '//' ){
+                uri = 'http:'+uri;
+            }
+            request(uri, config).pipe(fs.createWriteStream(filename)).on('close', () => {
+                resolve();
+            }).on('error', (err)=>{
+                
+            })
+           
         })
         .catch(error => console.log('caught', error.message))
 

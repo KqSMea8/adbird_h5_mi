@@ -35,7 +35,7 @@ class Builder {
         const ret = [];
         for(let i=0; i<nowList.length; i++){
             let find = false;
-            for(let n=0; n<8; n++){
+            for(let n=0; n<4; n++){
                 if( hotList[n].id == nowList[i].id ){
                     find = true;
                     break;
