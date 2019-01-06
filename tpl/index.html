@@ -47,10 +47,10 @@
             <span>Live Now</span>
             <a href="now.html">See All</a>
         </div>
-        <div class='slider'>
-            <% for(var i=0; i<10; i++){ %>
-                <a href="./detail.html?id=<%= nowList[i].id %>" style="background:<%= nowColor(i) %>;">
-                    <img src="/static/res/<%= nowList[i].id %>/icon.png">
+        <div>
+            <% for(var i=0; i<4; i++){ %>
+                <a class="box" href="/<%= channel.code %>/detail.html?id=<%= nowList[i].id %>">
+                    <div class="icon lazyload" data-src="/static/res/<%= nowList[i].id %>/icon.png"></div>
                     <p class="name"><%= nowList[i].name %></p>
                     <p class="plays">
                         <span class="count"><%= nowList[i].plays %>K+</span>
@@ -58,6 +58,7 @@
                     </p>
                 </a>
             <% } %>
+            <div class="clear"></div>
         </div>
     </div>
     <!-- adx -->

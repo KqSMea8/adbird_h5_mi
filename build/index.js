@@ -22,25 +22,33 @@ class Builder {
         let releaseFile = path.resolve(__dirname, `../release/${channel.code}/index.html`);
         tpl = ejs.render(tpl, {
             channel: channel,
-            nowList: DBUtils.getNowList(),
-            nowColor: this.nowColor,
+            nowList: this.liveNowList(),
             bigList: this.bigList()
         });
         fs.ensureFileSync(releaseFile);
         fs.writeFileSync(releaseFile, WebUtils.minHtml(tpl) );
     }
 
-    nowColor(index){
-        let yu = index%3;
-        if( yu == 0 ){
-            return 'rgba(129,196,58,.9)';
+    liveNowList(){
+        const nowList = DBUtils.getNowList();
+        const hotList = DBUtils.getHotList();
+        const ret = [];
+        for(let i=0; i<nowList.length; i++){
+            let find = false;
+            for(let n=0; n<8; n++){
+                if( hotList[n].id == nowList[i].id ){
+                    find = true;
+                    break;
+                }
+            }
+            if( !find ){
+                ret.push(nowList[i]);
+            }
+            if( ret.length >= 4 ){
+                break;
+            }
         }
-        else if( yu == 1 ){
-            return 'rgba(39,114,58,.9)'
-        }
-        else{
-            return 'rgba(67,151,23,.9)';
-        }
+        return ret;
     }
 
     bigList(){

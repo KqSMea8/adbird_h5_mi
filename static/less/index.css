@@ -29,6 +29,7 @@ body {
   line-height: 50px;
   height: 50px;
   text-align: center;
+  position: relative;
 }
 .header .back {
   background-size: contain;
@@ -73,6 +74,7 @@ body {
   width: 50px;
   text-align: right;
   color: #999;
+  line-height: 22px;
 }
 .content .title .icon {
   width: 20px;
@@ -82,64 +84,6 @@ body {
   background-position: center;
   display: inline-block;
   margin: 8px 0px -6px;
-}
-.content .slider {
-  overflow-x: auto;
-  display: flex;
-  align-items: left;
-  justify-content: left;
-  flex-wrap: nowrap;
-  margin-bottom: 8px;
-}
-.content .slider a {
-  width: 150px;
-  height: 74px;
-  margin: 23px 10px 0 0;
-  border-radius: 10px;
-  position: relative;
-  flex-shrink: 0;
-}
-.content .slider a img {
-  position: absolute;
-  display: block;
-  width: 56px;
-  height: 56px;
-  top: -25px;
-  left: 12px;
-  border-radius: 14px;
-  border: 3px solid #fff;
-}
-.content .slider a .name {
-  position: absolute;
-  bottom: 10px;
-  text-align: left;
-  text-indent: 18px;
-  display: inline-block;
-  width: 100%;
-  font-size: 14px;
-  font-weight: 400;
-  color: #fff;
-  line-height: 18px;
-  overflow: hidden;
-  margin: 0;
-}
-.content .slider a .plays {
-  top: 15px;
-  text-indent: 77px;
-  position: absolute;
-  font-size: 12px;
-  color: #fff;
-  overflow: hidden;
-  display: block;
-  width: 100%;
-  margin: 0;
-  white-space: nowrap;
-}
-.content .slider a .plays .count {
-  color: #F99D00;
-}
-.content .slider a .plays .label {
-  color: #fff;
 }
 .content .box {
   width: 25%;
@@ -165,14 +109,15 @@ body {
   -webkit-box-orient: vertical!important;
 }
 .content .box .plays {
-  font-size: 12px;
-  margin: 0 0 15px;
+  margin: 0 0 5px;
 }
 .content .box .plays .count {
   color: #F99D00;
+  font-size: 11px !important;
 }
 .content .box .plays .label {
   color: #9d9d9d;
+  font-size: 11px !important;
 }
 .content .verifi {
   line-height: 13px;
